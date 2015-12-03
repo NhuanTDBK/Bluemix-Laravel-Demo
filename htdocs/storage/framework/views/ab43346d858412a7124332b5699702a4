@@ -1,0 +1,41 @@
+<?php $__env->startSection('grid-layout'); ?>
+	<div class="wf-container">
+        <div class="wf-box">
+            <div class="content" style="background-color:#fff;webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);border-top-left-radius: 6px;border-top-right-radius: 6px;'">
+                <div class='invitefr' style="background-color:#fff;">
+                    <span>Mời bạn bè vào foodiee</span>
+                    <i class="fa fa-chevron-right" style='float:right;cursor:pointer;'></i>
+                </div>
+                <p>Content Here</p>
+                <p>Content Here</p>    
+                <p>Content Here</p>
+            </div>
+
+            <div class="content" style="margin-top:10px;background-color:#fff;webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);border-top-left-radius: 6px;border-top-right-radius: 6px;'">
+                <div class='findfr' style="cursor:pointer;background-color:#fff;">
+                    <span>Tìm bạn bè</span>
+                    <i class="fa fa-chevron-right" style='float:right;cursor:pointer;'></i>
+                </div>
+                <p>Content Here</p>
+                <p>Content Here</p>    
+                <p>Content Here</p>
+            </div>
+        </div>
+        <?php foreach($posts as $post): ?>
+            <div class="wf-box" data-id="<?php echo e($post["post_id"]); ?>">
+                <img src="<?php echo e(URL::to('api/photo').'/'.$post["photo_link"]); ?>" class="box-img" data-id="<?php echo e($post["post_id"]); ?>"/>
+                <div class="content">
+                    <h3 class="box-img-des"><?php echo e($post["description"]); ?></h3>
+                    <div class="box-img-card">
+                        <img src="<?php echo e(URL::asset("img/logo.png")); ?>" width="30" height="30" class="logo-profile">
+                        <div>
+                            <p class="card-owner"><?php echo e($post["owner"]); ?></p>
+                            <h4 class="card-title"><?php echo e($post['board_title']); ?></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.index', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
