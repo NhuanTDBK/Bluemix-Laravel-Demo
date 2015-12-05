@@ -11,7 +11,9 @@ Route::get('/board', function () {
 Route::get('/modal', function () {
     return view('modal');
 });
-
+Route::get('register', function (){
+    return view('login.register');
+});
 Route::get('/explorer', ['as'=>'explorer','uses'=>'FrontEndController@mainview']);
 Route::get('/home', ['as'=>'home','uses'=>'FrontEndController@homeview','middleware'=>'auth']);
 Route::get('/an-gi-bay-gio', 'FrontEndController@searchfoodview');
@@ -58,9 +60,7 @@ Route::controllers([
 Route::get('login', function (){
     return view('login.login');
 });
-Route::get('register', function (){
-    return view('login.register');
-});
+
 Route::get('callback','LoginController@callback');
 Route::post('register',['as'=>'sendRegister', 'uses'=>'LoginController@register']);
 Route::post('login',['as'=>'postLogin', 'uses'=>'UserController@login']);
