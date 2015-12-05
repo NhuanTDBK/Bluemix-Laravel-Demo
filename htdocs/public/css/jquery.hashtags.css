@@ -13,6 +13,7 @@
 .jqueryHashtags .theSelector{
 	background-color: transparent; 
 	position: relative; 
+	cursor: auto;
 	direction: ltr; 
 	font-size:14px;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -23,7 +24,6 @@
 	border-radius: 4px;
 	padding: 4px 6px;
 	vertical-align:middle;
-	min-height:48px !important;
 	line-height:20px;
 }
 

@@ -1,30 +1,25 @@
 @section('modal')
   <div class="modal fade modal-view" tabindex="-1">
-    <div class="modal-dialog" style="width:75%;">
+    <div class="modal-dialog">
       <div class="modal-content">
-          <div class="col-md-1">
-            <div class="left-arrow">
-              <i class="fa fa-chevron-left fa-2x"></i>
+        <div class="col-xs-8 center-right-side" id="main-post-id" style="border-radius:6px;margin-right:15px;">
+          <div class="mv-title keep-open">
+            <div class="mv-title-pinit" id="post_pin_btn">
+              <span>Đánh dấu</span>
             </div>
-          </div>
-          <div class="col-md-7 center-right-side" id="main-post-id" style="border-radius:6px;margin-right:15px;">
-            <div class="mv-title keep-open">
-              <div class="mv-title-pinit" id="post_pin_btn">
-                <span>Đánh dấu</span>
-              </div>
-              <div id="post_like_btn" class="mv-title-like">
+            <div id="post_like_btn" class="mv-title-like">
                 <em></em>
                 <span>Thích</span>
-              </div>
-              <div id="post_share_btn" class="mv-title-share">
-                <em></em>
+            </div>
+            <div id="post_share_btn" class="mv-title-share">
+              <em></em>
                 <span>Chia sẻ</span>
-              </div> 
-              <div id="post_send_btn" class="mv-title-send" id="dropdownMenu3" data-toggle="dropdown">
-                <em></em>
-                <span>Gửi</span>
-              </div> 
-              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3" style="margin-top:26px;">
+            </div> 
+            <div id="post_send_btn" class="mv-title-send" id="dropdownMenu3" data-toggle="dropdown">
+              <em></em>
+              <span>Gửi</span>
+            </div> 
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3" style="margin-top:26px;">
                 <li class="mv-square"></li>
                 <li role="presentation">
                   <textarea class="mv-mess" placeholder="Thêm tin nhắn..."></textarea>
@@ -64,18 +59,23 @@
             </ul>
             </div>
             <div class="fluid-container mv-img">
-              <div class="wf-box">
+              <div class="wf-box" style="margin-top:15px;">
+                <div class="left-arrow">
+                  <i class="fa fa-chevron-left fa-2x"></i>
+                </div>
                 <img id="main-photo-post" src="{{URL::asset('img/5.jpg')}}" class="box-img"/>
+                <div class="right-arrow">
+                  <i class="fa fa-chevron-right fa-2x"></i>
+                </div>
+                <div class="content">
+                  <p>
+                    Upload bởi <span id="owner-post"></span>
+                  </p>
+                </div>
               </div>
             </div>
-            <div class="fluid-container mv-img-footer">
-              <p></p>
-                <p>
-                  Upload bởi <span id="owner-post"></span>
-                </p>
-                </div>
-              </div>  
-          <div class="col-md-3 center-left-side">
+            </div>  
+          <div class="col-xs-3 center-left-side">
 
             <div class="fluid-container cls-title">
               <img src="{{URL::asset('img/5.jpg')}}" height="38" width="38" class="logo-profile">
@@ -105,15 +105,10 @@
               </div> 
             </div>
           </div>
-          <div class="col-md-3 mv-map">
+          <div class="col-xs-3 mv-map">
             <div id="map-detail"></div>
           </div>
-          <div class="col-md-1 col-right-arrow">
-            <div class="right-arrow">
-              <i class="fa fa-chevron-right fa-2x"></i>
-            </div>
-          </div>
-          <div class="col-md-7 col-md-offset-1 mv-cmt">
+          <div class="col-xs-8 mv-cmt">
             <div class="mv-cmt-owner">
               <img id="main-owner-avatarlink" src="img/5.jpg" class="logo-profile cmt-avatar">
               <div class="cmt-chat cmt-name">
@@ -125,12 +120,11 @@
               <img src="img/5.jpg" class="logo-profile cmt-avatar-owner">
               <div class="cmt-chat-owner">
                 <a>Tung</a>
-                <textarea class="cmt-boxchat" placeholder="Thêm bình luận"></textarea>
-                <button id="main-comment-btn" class="btn-info"><span>Comment</span></button>
+                <textarea id="main-comment-btn" class="cmt-boxchat" placeholder="Thêm bình luận"></textarea>
               </div>
             </div>
           </div>
-          <div class="col-md-10 col-md-offset-1 mv-related-post">
+          <div class="col-xs-12 mv-related-post">
           <p>Related Posts</p>
               <div class="wf-box">
                 <img src="{{URL::asset('img/5.jpg')}}">
@@ -184,10 +178,12 @@
     $("#post_like_btn").click(function(){
         likePost($("#main-post-id").data("id"));
     });
-    $("#main-comment-btn").click(function(){
-        var post_id = $("#main-post-id").data("id");
-        var comment = $(".mv-cmt-itembox textarea").val();
-        commentPost(post_id,comment);
+    $("#main-comment-btn").on('keyup', function(e){
+        if (e.which == 13 || e.keyCode == 13) {
+          var post_id = $("#main-post-id").data("id");
+          var comment = $(".mv-cmt-itembox textarea").val();
+          commentPost(post_id,comment);
+        }
     });
     function likePost(post_id){
         var url ="{{URL::to('/api/post')}}"+'/'+post_id+'/'+"like";

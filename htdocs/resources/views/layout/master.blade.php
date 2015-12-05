@@ -25,6 +25,7 @@
     <script src="{{URL::asset('js/jquery.min.js')}}"></script>
     <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
     <script src="{{URL::asset('js/responsive_waterfall.js')}}"></script>
+    <script src="{{URL::asset('js/jquery.validate.min.js')}}"></script>
     <title>Fresh Food</title>
 </head>
     

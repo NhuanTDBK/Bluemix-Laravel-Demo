@@ -14,14 +14,13 @@ var mySuggest = new Bloodhound({
         url:"/search/user?q=%QUERY",
         filter: function(users){
             return $.map(users.result,function(user){
-                if(max_score<user._score) max_score = user._score;
-                if((max_score-user._score)>1.5) return;
-                else
                 return {
-                    name:user._source.username,
-                    avatar_link:"api/photo/"+user._source.avatar_link,
-                    id:user._id
+                    name:user.name,
+                    avatar_link:"api/photo/"+user.avatar_link,
+                    id:user.user_id,
+                    username:user.username
                 }
+                //console.log(user);
             });
         },
         wildcard:"%QUERY"
@@ -36,12 +35,15 @@ $('#search-textbox').typeahead(null,{
     displayKey:"name",
     name:"name",
     templates:{
-        suggestion: Handlebars.compile("<p onclick='clickResult(this)' class='show_result' data-id='{{id}}' style='padding:6px;cursor: pointer'> <img class='logo-profile' height='30' width='30' src='{{avatar_link}}'/><b>{{name}}</b></p>"),
+        suggestion: Handlebars.compile("<p onclick='clickResult(this)' class='show_result' data-id='{{id}}' data-username='{{username}}' style='padding:6px;cursor: pointer'> <img class='logo-profile' height='30' width='30' src='{{avatar_link}}'/><b>{{name}}</b></p>"),
         footer:Handlebars.compile("<b>Search for '{{QUERY}}'</b>"),
         notFound:"Please try another keyword",
         pending:"Searching..."
     }
 });
 function clickResult(e){
-    console.log(e);
+    var user_id = $(e).data("username");
+    var url = user_id;
+    console.log(window.location.hostname+url);
+    window.location.href=url;
 }

@@ -128,8 +128,8 @@ class SearchController extends Controller
     public function searchUser(Request $request){
         $name = $request->input("q");
         $query  = ["username"=>$name];
-        $result = $this->search(USER_TYPE,$query);
-        return $result;
+        $result = User::getUserSuggest($name);
+        return response()->json(["result"=>$result]);
     }
     public function searchBoard(Request $request){
         $name = $request->input("q");

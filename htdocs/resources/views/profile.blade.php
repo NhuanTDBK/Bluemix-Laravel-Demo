@@ -80,7 +80,7 @@
         </div>
         <div id="tab2" class="wf-container tab-pane" style="margin: 40 auto;width: 90%;">
             @foreach($boards as $board)
-            <div class="wf-box col-sm-3" data-id="11">
+            <div class="wf-box col-xs-3" data-id="11">
                 <div class="grid-board">
                     <h3 class="box-img-des"><a href="{{URL::to('board').'/'.$board["board_id"]}}">{{$board["title"]}}</a></h3>
                     <img class="board-cover" src="{{$board["preview"][0]}}" style="height: 152px; width: 246px;" class="box-img" data-id="11"/>
@@ -95,7 +95,7 @@
                             <img src="{{$board["preview"][3]}}" class="box-img"  style="height: 50px;"data-id="11"/>
                         </li>
                     </ul>
-            </div>
+                </div>
                 <div class="content">
                     <div class="box-img-card">
                         <button>
@@ -129,7 +129,7 @@
                 </div>
             </div>
             @endforeach
-        </div> 
+        </div>
         <div id="tab3" class="wf-container tab-pane" style="margin: 40 auto;width: 90%;">
             <div class="wf-box col-sm-3" data-id="11">
                 <ul class="grid-board-fl list-group">
@@ -145,7 +145,7 @@
                     <li class="list-group-item">
                         <img src="img/5.jpg" class="box-img" data-id="11"/>
                     </li>
-                </ul>   
+                </ul>
             </div>
             <div class="wf-box col-sm-3" data-id="11">
                 <ul class="grid-board-fl list-group">
@@ -161,7 +161,7 @@
                     <li class="list-group-item">
                         <img src="img/5.jpg" class="box-img" data-id="11"/>
                     </li>
-                </ul>   
+                </ul>
             </div>
         </div>
         <div id="tab4" class="wf-container tab-pane" style="margin: 40 auto;width: 90%;">
@@ -179,7 +179,7 @@
                     <li class="list-group-item">
                         <img src="img/6.jpg" class="box-img" data-id="11"/>
                     </li>
-                </ul>   
+                </ul>
             </div>
             <div class="wf-box col-sm-3" data-id="11">
                 <ul class="grid-board-fl list-group">
@@ -195,12 +195,12 @@
                     <li class="list-group-item">
                         <img src="img/5.jpg" class="box-img" data-id="11"/>
                     </li>
-                </ul>   
+                </ul>
             </div>
-        </div> 
-    </div>   
+        </div>
+    </div>
     <script type="text/javascript">
-    
+
         menu = $("#user-profile-list");
         $("#post-list").addClass('active-profile-li');
         {{--$("#post-list").click(function()--}}
@@ -289,13 +289,13 @@
                     // console.log(data);
                     if(data.result=="followed")
                     {
-                    
+
                         text = "Đã theo dõi";
-                        
+
                     }
-                    else 
+                    else
                     {
-                       
+
                         text = "Theo dõi";
                     }
                     $("#btn-follow").find('span').text(text);

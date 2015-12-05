@@ -10,14 +10,14 @@
       <div class="modal-body">
        <form class="standardForm form-horizontal" method="post">
          <div class="form-group">
-             <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
-             <div class="col-sm-10">
+             <label for="inputEmail3" class="col-xs-2 control-label">Name</label>
+             <div class="col-xs-10">
                <input type="text" class="form-control" id="profile-name" placeholder="Email">
              </div>
           </div>
           <div class="form-group">
-           <label for="inputEmail3" class="col-sm-2 control-label">Avatar</label>
-           <div class="col-sm-10">
+           <label for="inputEmail3" class="col-xs-2 control-label">Avatar</label>
+           <div class="col-xs-10">
              <div class="profileImageWrapper">
                 <img id="profile-avatarlink" style="width:75;height: 75px" src="https://s-media-cache-ak0.pinimg.com/avatars/elconductor3_1384696909_75.jpg" class="profileImage img-circle" data-load-state="pending">
              </div>
@@ -25,20 +25,20 @@
            </div>
           </div>
           <div class="form-group">
-             <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-             <div class="col-sm-10">
+             <label for="inputEmail3" class="col-xs-2 control-label">Email</label>
+             <div class="col-xs-10">
                <input type="text"  class="form-control" id="profile-email" placeholder="Email">
              </div>
           </div>
           <div class="form-group">
-               <label for="inputEmail3" class="col-sm-2 control-label">Username</label>
-               <div class="col-sm-10">
+               <label for="inputEmail3" class="col-xs-2 control-label">Username</label>
+               <div class="col-xs-10">
                  <input type="text" class="form-control" id="profile-username" placeholder="Email">
                </div>
            </div>
            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-2 control-label">Description</label>
-              <div class="col-sm-10">
+              <label for="inputEmail3" class="col-xs-2 control-label">Description</label>
+              <div class="col-xs-10">
                 <textarea  class="form-control" id="profile-description" placeholder="Email"></textarea>
               </div>
            </div>

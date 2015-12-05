@@ -210,8 +210,8 @@ class UserController extends Controller
               return redirect()->intended('home');
         } else {
             $result = array(
-                "login"=>'true');
-            echo "sai ten mat khau";
+                "login"=>'false');
+            return response()->json($result);
         }
         
     }

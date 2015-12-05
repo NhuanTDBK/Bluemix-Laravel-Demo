@@ -1,6 +1,6 @@
 @extends('layout.index')
 @section('grid-layout')
-	<div class="wf-container">
+	<div class="wf-container" style="margin-top:50px;">
         <div class="wf-box">
             <div class="content" style="background-color:#fff;webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);border-top-left-radius: 6px;border-top-right-radius: 6px;'">
                 <div class='invitefr' style="background-color:#fff;">

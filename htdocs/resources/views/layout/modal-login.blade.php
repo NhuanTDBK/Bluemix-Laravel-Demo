@@ -15,12 +15,12 @@
             {!!Form::open(array('route'=>'postLogin','method' => 'post','files' => true))!!}
             <div class="fluid-container ml-formlogin">
               <div class="form-group">
-                <input type="text" class="form-control" id="email" name="email" placeholder='Email'>
+                <input type="text" class="form-control" id="email" name="email" placeholder='Email' data-toggle="popover" data-content="Alert">
               </div>
               <div class="form-group">
                 <input type="password" class="form-control" id="password" name="password" placeholder='Mật khẩu'>
               </div>
-              <button class="btn btn-primary btn-lg btn-block">Đăng nhập</button>
+              <button id = "btn-login"class="btn btn-primary btn-lg btn-block">Đăng nhập</button>
             </div>
             
           </div>
@@ -51,5 +51,49 @@
           }
         }, {scope: ('email','user_about_me','user_likes')});
       });
+//      $("#btn-login").click(function(e){
+//            e.preventDefault();
+//            var url = $("form").attr("action");
+//            var data = $("form").serializeArray();
+//            var email = data[1].value;
+//            var password = data[2].value;
+//            console.log($('form').validate());
+//            $.post(url,$("form").serialize(),function(data){
+//
+//            });
+//
+//      });
+      $('form').validate({
+            rules:{
+              email:{
+                required:true,
+                email:true
+              },
+              password:{
+                required:true,
+                minlength: 4
+              }
+            },
+            messages:{
+              email:{
+                required: "Vui lòng nhập email",
+                email: "Vui lòng nhập đúng định dạng email"
+              },
+              password:{
+                required: "Vui lòng nhập mật khẩu",
+                minlength: "Mật khẩu phải 6 kí tự trở lên"
+              }
+            },
+            submitHandler:function(form){
+                event.preventDefault();
+                var url = $("form").attr("action");
+               $.post(url,$("form").serialize(),function(data){
+                    console.log(data);
+                    if(data.login=="false"){
+                        alert("Sai username/password")
+                    }
+               });
+            }
+          });
     </script>
 {{-- @stop  --}}

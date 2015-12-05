@@ -24,6 +24,12 @@
     <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
     <script src="{{URL::asset('js/responsive_waterfall.js')}}"></script>
     <script src="{{URL::asset('js/typeahead.bundle.js')}}"></script>
+    <script src="{{URL::asset('js/jquery.validate.min.js')}}"></script>
+    <script src="{{URL::asset('js/facebook_connect.js')}}"></script>
+    <script>
+        //DEFINE GLOBAL SERVICE ENDPOINT
+        HOME ="{{url('home')}}";
+    </script>
      {{--<script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>--}}
     <title>Fresh Food</title>
 </head>
@@ -31,23 +37,28 @@
     {{-- Thanh menu --}}
     <nav class="navbar navbar-inverse navbar-fixed-top" style='background-color:#fff;webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);'>
         <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand logo" href="/home" style="margin-left:80px;">
-                    <img src="{{URL::asset("img/logo.png")}}" height="50" width="50">
-                </a>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="margin-top:25px;">
+            <div class="navbar-header col-xs-5">
+                <div class="col-xs-3">
+                    <a class="navbar-brand logo" href="/home">
+                        <img src="{{URL::asset("img/logo.png")}}" height="50" width="50">
+                    </a>
+                </div>    
+                <div class="nav navbar-left nav-search col-xs-9">
+                    <form>
+                        <input id="search-textbox" class="typeahead" type="search" placeholder="Search" style="margin-top:15px;">
+                    </form>
+                </div>
+            </div>
+                
+            <div class="nav navbar-right">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="margin-top:22px;">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
             </div>
-
-            <div class="collapse navbar-collapse container" id="myNavbar">
-                <form class="nav navbar-nav navbar-left" >
-                    <input id="search-textbox" class="typeahead" type="search" placeholder="Search" style="margin-top:22px;">
-                </form>
-
-                <ul class="nav navbar-nav navbar-right" style="margin-top:15px; margin-left:65px;">
+            <div class="collapse navbar-collapse navbar-right col-xs-7" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right nav-collapse">
                     <li>
                         <input type="file" name="image" id="imgInp" data-id = "" class="file" accept="image/*" style="display:none;">
                         <a href="#" id="upload">
@@ -75,7 +86,7 @@
                         </a>
                     </li>
                     @endif
-                    <li class="dropdown" style="margin-top:10px;">
+                    <li class="dropdown" style="margin-top:5px;">
                          @if(Auth::user()!=null)
                         <img src="{{URL::to('/api/photo/')."/".Auth::user()["avatar_link"]}}" height="30" width="30" class="logo-profile" id="user-avatar-link-profile" data-toggle="dropdown" style='cursor:pointer;'>
                         @endif
