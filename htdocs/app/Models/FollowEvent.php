@@ -28,6 +28,14 @@ class FollowEvent extends Model
 		$follow_event["follow_type"] = FOLLOW_USER;
 		$follow_event->save();
 	}
+    public static function followBoard($follower,$board_id)
+    {
+        $follow_event = new FollowEvent;
+        $follow_event["follower_id"] = $follower;
+        $follow_event["following_id"] = $board_id;
+        $follow_event["follow_type"] = FOLLOW_BOARD;
+        $follow_event->save();
+    }
 	public static function unfollowUser($follower,$following)
 	{
 		$result = FollowEvent::where('follower_id',$follower)->where('following_id',$following)->first();
@@ -39,6 +47,7 @@ class FollowEvent extends Model
 		$result = User::whereIn('user_id',$list_id)->get(['username','name','user_id']);
 		return $result;
 	}
+
 	public static function getFollower($user_id)
 	{
 		$list_id = FollowEvent::where('following_id',$user_id)->get(['follower_id']);
@@ -52,5 +61,11 @@ class FollowEvent extends Model
     public static function countFollower($user_id){
         $number_following_id = FollowEvent::where('following_id',$user_id)->count();
         return $number_following_id;
+    }
+    public static function getBoardFollowing($board_id)
+    {
+        $list_id = FollowEvent::where('following_id',$board_id)->get(['following_id']);
+        $result = User::whereIn('user_id',$list_id)->get(['username','name','user_id']);
+        return $result;
     }
 }

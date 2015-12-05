@@ -82,20 +82,20 @@
             @foreach($boards as $board)
             <div class="wf-box col-sm-3" data-id="11">
                 <div class="grid-board">
-                    <h3 class="box-img-des">{{$board["title"]}}</h3>
+                    <h3 class="box-img-des"><a href="{{URL::to('board').'/'.$board["board_id"]}}">{{$board["title"]}}</a></h3>
                     <img class="board-cover" src="{{$board["preview"][0]}}" style="height: 152px; width: 246px;" class="box-img" data-id="11"/>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <img src="{{$board["preview"][1]}}" class="box-img" style="height: 30px;width:63px" data-id="11"/>
+                            <img src="{{$board["preview"][1]}}" class="box-img" style="height: 50px;" data-id="11"/>
                         </li>
                         <li class="list-group-item">
-                            <img src="{{$board["preview"][2]}}" class="box-img" style="height: 30px;width:63px" data-id="11"/>
+                            <img src="{{$board["preview"][2]}}" class="box-img" style="height: 50px;" data-id="11"/>
                         </li>
                         <li class="list-group-item">
-                            <img src="{{$board["preview"][3]}}" class="box-img"  style="height: 30px;width:63px"data-id="11"/>
+                            <img src="{{$board["preview"][3]}}" class="box-img"  style="height: 50px;"data-id="11"/>
                         </li>
                     </ul>
-                </div>    
+            </div>
                 <div class="content">
                     <div class="box-img-card">
                         <button>

@@ -27,7 +27,7 @@ Route::get('/{user_name}','UserController@getUser');
 //Route::get('/{user_name}/{board_name}','UserController@getUserBoards');
 
 Route::get('post/{post_id}','PostController@getPostById');
-Route::get('board/{board_id','BoardController@getBoard');
+Route::get('board/{board_id}','BoardController@getBoard');
 Route::group(['prefix'=>'api'],function()
 {
 	Route::resource('board','BoardController');

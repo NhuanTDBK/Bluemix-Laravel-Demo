@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Board;
+use App\Models\UserBoard;
 use Auth;
 class BoardController extends Controller
 {
@@ -103,5 +104,9 @@ class BoardController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function getBoard($board_id){
+        $result = UserBoard::getBoardById($board_id);
+        return response()->view('board',["board"=>$result["board"],"profile"=>$result["profile"],"posts"=>$result["posts"]]);
     }
 }

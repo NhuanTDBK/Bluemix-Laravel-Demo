@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\UserPosts;
 use App\Models\CommentEvent;
+use App\Models\PostDetails;
 use Auth;
 use Storage;
 class PostController extends Controller
@@ -72,10 +73,13 @@ class PostController extends Controller
     public function show($post_id)
     {
         //
-        $post = UserPosts::getPostById($post_id);
+        $post =$this->getPostDetail($post_id)[0];
+        $post_stat = $this->getPostDetail($post_id)[1];
         if(Auth::check())
             $post["liked"]=LikeEvent::checkLiked($post["post_id"],Auth::user()->user_id);
         $post["comments"]=Post::getCommentsByPostId($post_id);
+        $post["likes"]=$post_stat["likes"];
+        $post["pins"] = $post_stat["pins"];
         return response()->json($post);
     }
 
@@ -125,8 +129,15 @@ class PostController extends Controller
     public function likePost($post_id,$user_id){
 
     }
-//    public function getPostById($post_id)
-//    {
-//        return view('layout.view');
-//    }
+    public function getPostById($post_id)
+    {
+        $post =$this->getPostDetail($post_id)[0];
+        $post_stat = $this->getPostDetail($post_id)[1];
+        return view('layout.view',["post"=>$post,"post_stat"=>$post_stat]);
+    }
+    private function getPostDetail($post_id){
+        $post = UserPosts::getPostById($post_id);
+        $post_stat = PostDetails::getDetails($post_id);
+        return [$post,$post_stat];
+    }
 }
