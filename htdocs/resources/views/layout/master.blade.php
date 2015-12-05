@@ -24,25 +24,8 @@
   async defer></script>
     <script src="{{URL::asset('js/jquery.min.js')}}"></script>
     <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
-
     <script src="{{URL::asset('js/responsive_waterfall.js')}}"></script>
     <title>Fresh Food</title>
-    <script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                  appId      : '177466745937925',
-                  xfbml      : true,
-                  version    : 'v2.5'
-                });
-              };
-            (function(d, s, id){
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
 </head>
     
 <body>
@@ -173,8 +156,8 @@
             </section>
 
             <footer>
-    @include('layout.modal-view')
     @include('layout.modal-login')
+<script src="{{URL::asset('js/facebook_connect.js')}}"></script>
 <script>
     $(document).ready(function(){
         var chek = false;
@@ -236,3 +219,4 @@
     }); 
     
 </script>
+</footer>

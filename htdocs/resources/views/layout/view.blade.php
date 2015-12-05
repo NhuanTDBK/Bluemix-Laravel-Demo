@@ -24,6 +24,7 @@
     <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
     <script src="{{URL::asset('js/responsive_waterfall.js')}}"></script>
     <script src="{{URL::asset('js/typeahead.bundle.js')}}"></script>
+    <script src="{{URL::asset('js/facebook_connect.js')}}"></script>
      {{--<script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>--}}
     <title>Fresh Food</title>
 </head>
@@ -266,20 +267,6 @@
         </div>
         </body>
         <script>
-             window.fbAsyncInit = function() {
-                        FB.init({
-                          appId      : '1473244306316838',
-                          xfbml      : true,
-                          version    : 'v2.5'
-                        });
-                      };
-            (function(d, s, id){
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
             $(".modal-view").modal('show');
             $('.dropdown-menu li, .dropdown-menu textarea').click(function(e) {
                   e.stopPropagation();
