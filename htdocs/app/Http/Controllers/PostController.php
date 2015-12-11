@@ -8,7 +8,9 @@ use Illuminate\Http\Response;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\Place;
 use App\Models\UserPosts;
+use App\Models\Board;
 use App\Models\CommentEvent;
 use App\Models\PostDetails;
 use Auth;
@@ -60,7 +62,12 @@ class PostController extends Controller
         $board_id = $request->input('board_id');
         $user_id = Auth::user()->user_id;
         $photo_link = $request->input('photo_link');
-        $post = Post::CreatePost($board_id,$description,$photo_link,$user_id,null,null);
+        $place_lat = $request->input('latitude');
+        $place_lng = $request->input('longitude');
+        $place_name = $request->input('name_address');
+        $place_address = $request->input('address');
+        $place = Place::createPlace($place_name,$place_address,$place_lat,$place_lng);
+        $post = Post::CreatePost($board_id,$description,$photo_link,$user_id,$place,null);
         return response()->json($post);
     }
 
@@ -78,8 +85,10 @@ class PostController extends Controller
         if(Auth::check())
             $post["liked"]=LikeEvent::checkLiked($post["post_id"],Auth::user()->user_id);
         $post["comments"]=Post::getCommentsByPostId($post_id);
-        $post["likes"]=$post_stat["likes"];
+        $post["likes"]= $post_stat["likes"];
         $post["pins"] = $post_stat["pins"];
+        $post["boards"]= Board::getPostsInBoard($post["board_id"]);
+        $post["places"]= Place::getPlaceById(Post::getPostById($post_id)['place_id']);
         return response()->json($post);
     }
 

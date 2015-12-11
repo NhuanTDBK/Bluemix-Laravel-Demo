@@ -54,10 +54,10 @@ return [
 
         'mysql' => [
             'driver'    => 'mysql',
-            'host'      => 'us-cdbr-iron-east-03.cleardb.net',
-            'database'  => 'ad_662d2016066edff',
-            'username'  => 'b6c599189a65fd',
-            'password'  => 'da82006f',
+            'host'      => 'localhost',
+            'database'  => 'foodiee',
+            'username'  => 'root',
+            'password'  => '',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

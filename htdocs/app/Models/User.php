@@ -9,12 +9,11 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Auth;
+use App\Models\FollowEvent;
+use App\Models\Board;
+use App\Models\Post;
+use Psy\ExecutionLoop\ForkingLoop;
 use DB;
-//use App\Models\FollowEvent;
-//use App\Models\Board;
-//use App\Models\Post;
-//use Psy\ExecutionLoop\ForkingLoop;
-
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, AuthorizableContract
      {
     protected $table = 'users';
@@ -82,8 +81,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         );
     }
     public static function getUserSuggest($username){
-        $q = "MATCH(name) AGAINST"."('*".$username."*'"."IN BOOLEAN MODE)";
+//        $q = "MATCH(name) AGAINST"."('*".$username."*'"."IN BOOLEAN MODE)";
+        $q = "name LIKE '%".$username."%'";
         $result = DB::table('users')->whereRaw($q)->get();
         return $result;
+    }
+    public function notifications(){
+        return $this->hasMany("Notification","user_id");
     }
 }

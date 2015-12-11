@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 
 class NotificationController extends Controller
 {
@@ -24,9 +25,19 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $channel = $request->input("user_id");
+        $text = $request->input("text");
+        $avatar_link = $request->input("avatar_link");
+        $post_id = $request->input("post_id");
+        $pusher = App::make('pusher');
+
+        $pusher->trigger( $channel,
+                      'notification', 
+                      array('text' => $text,
+                            'post_id' => $post_id,
+                            'avatar_link' => $avatar_link));
     }
 
     /**
@@ -83,5 +94,16 @@ class NotificationController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function getLatest(){
+//        if(Auth::check()){
+//            $id = Auth::user()->user_id;
+//            $user = Auth::user();
+//            $notifications = Notification::getNotifications(13);
+//            return response()->json($notifications);
+//        }
+//        else
+//            return response()->json("Login please");
+
     }
 }

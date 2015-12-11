@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\App;
 use App\Http\Requests;
+use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Models\LikeEvent;
 use Auth;
@@ -87,14 +88,26 @@ class LikeController extends Controller
     }
     public function likePost($post_id)
     {
-        if(!Auth::check())
+        if(!Auth::check()){
             return response()->json('Please login');
+        }
         $current_id = Auth::user()->user_id;
+        $avatar_link = Auth::user()->avatar_link;
+        $name = Auth::user()->name;
         $post= LikeEvent::checkLiked($post_id,$current_id);
-        if(!$post)
+        $channel = Post::getPostById($post_id)["user_id"];
+        if(!$post){
             $result = LikeEvent::createLikeEvent($post_id,$current_id);
-        else
+            $pusher = App::make('pusher');
+
+            $pusher->trigger( $channel,
+                            'like', 
+                            array('name' => $name,
+                                'post_id' => $post_id,
+                                'avatar_link' => $avatar_link));
+        }else{
             $result = LikeEvent::removeLikeEvent($post["like_event_id"]);
+        }
         return response()->json(["result"=>$result]);
     }
 }

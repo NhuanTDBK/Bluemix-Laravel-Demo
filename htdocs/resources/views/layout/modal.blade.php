@@ -76,9 +76,12 @@
   </div><!-- /.modal -->
 
   <script>
-    // This example adds a search box to a map, using the Google Place Autocomplete
-    // feature. People can enter geographical searches. The search box will return a
-    // pick list containing a mix of places and predicted search terms.
+    $(document).ready(function(){
+      var waterfall = new Waterfall({
+          minBoxWidth: 250
+      });
+    });
+    var latitude,longitude,address, name_address;
     $('#btnCreate').click(function(event){
        createBoard();
        changeClass(1);
@@ -104,7 +107,11 @@
         var data ={
           'description':$('#board_description').val(),
           'board_id':$(this).parent().find('span:first').data('id'),
-          'photo_link':getId($('#img_preview').find('img').attr("src"))
+          'photo_link':getId($('#img_preview').find('img').attr("src")),
+          'latitude' : latitude,
+          'longitude' : longitude,
+          'address' : address,
+          'name_address' : name_address
         };
         $.post(url,data,function(data){
           console.log(data);
@@ -204,9 +211,11 @@
               bounds.extend(place.geometry.location);
           }
 
-          console.log('ID: ' + place.place_id + ' <br> ' + 'LatLng' + place.geometry.location);
-          console.log(place.geometry.location);
-
+          console.log(place);
+          latitude = place.geometry.location.lat();
+          longitude = place.geometry.location.lng();
+          address = place.formatted_address;
+          name_address = place.name;
           $('.locate-map').show();
           $('.locate-map').html('tại- '+place.name);
           $('.locate-map').show();
@@ -246,6 +255,6 @@
     });
     listBoardUser();
   </script>
- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFo1vaTwz6NILG9inO-5HOEQ14yYWSf9U&signed&libraries=places"
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFo1vaTwz6NILG9inO-5HOEQ14yYWSf9U&signed&libraries=places&language=vi"
   async defer></script> 
 {{-- @stop  --}}

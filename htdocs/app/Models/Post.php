@@ -9,6 +9,7 @@ use App\Models\PostComment;
 use App\Models\PostLiker;
 class Post extends Model{
 	protected $table = 'posts';
+	protected $primaryKey="post_id";
 	public function board()
 	{
 		return $this->belongsTo('App\Models\Board');
@@ -59,4 +60,10 @@ class Post extends Model{
         $result =  PostComment::where('post_id',$post_id)->get();
         return $result;
     }
+    public static function getPostByPlaceId($place_id)
+	{
+		if(isset($place_id))
+			return Post::whereIn('place_id',$place_id)->get();
+	}
+
 }

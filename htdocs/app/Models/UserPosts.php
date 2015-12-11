@@ -22,8 +22,12 @@ class UserPosts extends Model
 	{
     	if(isset($user_id))
         {
-            $list_id = FollowEvent::where('follower_id',$user_id)->get(['following_id']);
+            $list_id = FollowEvent::where('follower_id',$user_id)->orderBy('updated_at','desc')->get(['following_id']);
             return UserPosts::whereIn('user_id',$list_id)->get();
         }
 	}
+    public static function getPostsByPlaceId($place_id){
+        $lists = UserPosts::where('place_id',$place_id)->get();
+        return $lists;
+    }
 }

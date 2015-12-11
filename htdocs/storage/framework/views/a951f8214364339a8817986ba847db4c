@@ -1,0 +1,29 @@
+<?php echo Form::open(array('route'=>'sendRegister','method' => 'post','files' => true)); ?>
+
+<?php echo Form::label('','Username'); ?>
+
+<?php echo Form::text('username','',array('class'=> 'inpput')); ?><br><br>
+<?php echo Form::label('','Full name'); ?>
+
+<?php echo Form::text('name','',array('class'=> 'inpput')); ?><br><br>
+<?php echo Form::label('','Password'); ?>
+
+<?php echo Form::password('password','',array('class'=> 'inpput')); ?><br><br>
+<?php echo Form::label('','RePassword'); ?>
+
+<?php echo Form::password('rePassword','',array('class'=> 'inpput')); ?><br><br>
+<?php echo Form::label('','Email'); ?>
+
+<?php echo Form::email('email','',array('class'=> 'inpput')); ?><br><br>
+<?php if(count($errors)>0): ?>
+<ul>
+    <?php foreach($errors->all() as $error): ?>
+    <li><?php echo $error; ?></li>
+    <?php endforeach; ?>
+</ul>
+<?php endif; ?>
+<?php echo Form::submit('Gửi'); ?>
+
+<?php echo Form::reset('Xóa'); ?>
+
+<?php echo Form::close(); ?>

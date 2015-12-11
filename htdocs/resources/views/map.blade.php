@@ -1,12 +1,17 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <title>Google Maps AJAX + mySQL/PHP Example</title>
-    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"
-            type="text/javascript"></script>
-    <script type="text/javascript">
-    //<![CDATA[
+@extends('layout.index')
+<link href="{{URL::asset('img/logo.png')}}" rel="icon" type="image/png" sizes="96x96">
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<title>Ăn gì bây giờ</title>
+@section('grid-layout')
+  <h1>gjgj</h1>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var waterfall = new Waterfall({
+          minBoxWidth: 250
+      });
+    });
     var map;
     var markers = [];
     var infoWindow;
@@ -15,12 +20,12 @@
     function load() {
       map = new google.maps.Map(document.getElementById("map"), {
         center: new google.maps.LatLng(40, -100),
-        zoom: 4,
+        zoom: 14,
         mapTypeId: 'roadmap',
         mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
       });
       infoWindow = new google.maps.InfoWindow();
-
+     
       locationSelect = document.getElementById("locationSelect");
       locationSelect.onchange = function() {
         var markerNum = locationSelect.options[locationSelect.selectedIndex].value;
@@ -31,15 +36,6 @@
    }
 
    function searchLocations() {
-     // var address = document.getElementById("addressInput").value;
-     // var geocoder = new google.maps.Geocoder();
-     // geocoder.geocode({address: address}, function(results, status) {
-     //   if (status == google.maps.GeocoderStatus.OK) {
-     //    searchLocationsNear(results[0].geometry.location);
-     //   } else {
-     //     alert(address + ' not found');
-     //   }
-     // });
      navigator.geolocation.getCurrentPosition(searchLocationsNear);
    }
 
@@ -62,7 +58,7 @@
      console.log("Lat " +pos.coords.longitude);
      console.log("Long: " + pos.coords.latitude);
      var radius = document.getElementById('radiusSelect').value;
-     var searchUrl = 'phpsqlsearch_genxml.php?lat=' + pos.coords.latitude + '&lng=' + pos.coords.longitude + '&radius=' + radius;
+     var searchUrl = 'model-test?lat=' + pos.coords.latitude + '&lng=' + pos.coords.longitude + '&radius=' + radius;
      downloadUrl(searchUrl, function(data) {
        var xml = parseXml(data);
        var markerNodes = xml.documentElement.getElementsByTagName("marker");
@@ -90,9 +86,11 @@
 
     function createMarker(latlng, name, address) {
       var html = "<b>" + name + "</b> <br/>" + address;
+      //var image = 'images/icon.png';
       var marker = new google.maps.Marker({
         map: map,
         position: latlng
+       // icon: image
       });
       google.maps.event.addListener(marker, 'click', function() {
         infoWindow.setContent(html);
@@ -135,23 +133,5 @@
     }
 
     function doNothing() {}
-
-    //]]>
   </script>
-  </head>
-
-  <body style="margin:0px; padding:0px;" onload="load()">
-    <div>
-     <input type="text" id="addressInput" size="10"/>
-    <select id="radiusSelect">
-      <option value="25" selected>25 Dặm</option>
-      <option value="100">100 Dặm</option>
-      <option value="200">200 Dặm</option>
-    </select>
-
-    <input type="button" onclick="searchLocations()" value="Search"/>
-    </div>
-    <div><select id="locationSelect" style="width:100%;visibility:hidden"></select></div>
-    <div id="map" style="width: 100%; height: 80%"></div>
-  </body>
-</html>
+@stop

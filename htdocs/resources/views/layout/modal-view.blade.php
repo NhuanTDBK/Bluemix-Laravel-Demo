@@ -13,7 +13,7 @@
             </div>
             <div id="post_share_btn" class="mv-title-share">
               <em></em>
-                <span>Chia sẻ</span>
+              <span id="fb_share">Chia sẻ</span>
             </div> 
             <div id="post_send_btn" class="mv-title-send" id="dropdownMenu3" data-toggle="dropdown">
               <em></em>
@@ -26,47 +26,21 @@
                 </li>
                 <li role="presentation">
                   <ul class="mv-listfr">
-                    <li>
-                      <img src="{{URL::asset("img/logo.png")}}" width="35" height="35" class="logo-profile">
-                      <p>đsadá</p>
-                    </li>
-                    <li>
-                      <img src="{{URL::asset("img/logo.png")}}" width="35" height="35" class="logo-profile">
-                      <p>đsadá</p>
-                    </li>
-                    <li>
-                      <img src="{{URL::asset("img/logo.png")}}" width="35" height="35" class="logo-profile">
-                      <p>đsadá</p>
-                    </li>
-                    <li>
-                      <img src="{{URL::asset("img/logo.png")}}" width="35" height="35" class="logo-profile">
-                      <p>đsadá</p>
-                    </li>
-                    <li>
-                      <img src="{{URL::asset("img/logo.png")}}" width="35" height="35" class="logo-profile">
-                      <p>đsadá</p>
-                    </li>
-                    <li>
-                      <img src="{{URL::asset("img/logo.png")}}" width="35" height="35" class="logo-profile">
-                      <p>đsadá</p>
-                    </li>
-                    <li>
-                      <img src="{{URL::asset("img/logo.png")}}" width="35" height="35" class="logo-profile">
-                      <p>đsadá</p>
-                    </li>
+                    @if(Auth::user()!=null)
+                      @foreach(App\Models\FollowEvent::getFollower(Auth::user()->user_id) as $key => $value)
+                      <li data-userid="{{$value->user_id}}" data-userlink="{{Auth::user()->avatar_link}}">
+                        <img src="{{URL::to('/api/photo/')."/".$value->avatar_link}}" width="35" height="35" class="logo-profile">
+                        <p>{{$value->name}}</p>
+                      </li>
+                      @endforeach
+                    @endif  
                   </ul>
                 </li>
             </ul>
             </div>
             <div class="fluid-container mv-img">
               <div class="wf-box" style="margin-top:15px;">
-                <div class="left-arrow">
-                  <i class="fa fa-chevron-left fa-2x"></i>
-                </div>
                 <img id="main-photo-post" src="{{URL::asset('img/5.jpg')}}" class="box-img"/>
-                <div class="right-arrow">
-                  <i class="fa fa-chevron-right fa-2x"></i>
-                </div>
                 <div class="content">
                   <p>
                     Upload bởi <span id="owner-post"></span>
@@ -78,35 +52,18 @@
           <div class="col-xs-3 center-left-side">
 
             <div class="fluid-container cls-title">
-              <img src="{{URL::asset('img/5.jpg')}}" height="38" width="38" class="logo-profile">
+              <img src="{{URL::asset('img/5.jpg')}}" height="38" width="38" class="logo-profile" id="cls-title">
               <div class="cls-user">
-                <p class="cls-board">hh</p>
-                <p class="cls-name">HoTung</p>
+                <p class="cls-board" id="cls-board">hh</p>
+                <p class="cls-name" id="cls-name">HoTung</p>
               </div>
             </div>
-            <div class="row fluid-container cls-album">
-              <div class="wf-box">
-                <img src="{{URL::asset('img/5.jpg')}}" class="box-img"/>
-              </div> 
-              <div class="wf-box">
-                <img src="{{URL::asset('img/5.jpg')}}" class="box-img"/>
-              </div> 
-              <div class="wf-box">
-                <img src="{{URL::asset('img/5.jpg')}}" class="box-img"/>
-              </div> 
-              <div class="wf-box">
-                <img src="{{URL::asset('img/5.jpg')}}" class="box-img"/>
-              </div> 
-              <div class="wf-box">
-                <img src="{{URL::asset('img/5.jpg')}}" class="box-img"/>
-              </div> 
-              <div class="wf-box">
-                <img src="{{URL::asset('img/5.jpg')}}" class="box-img"/>
-              </div> 
+            <div class="row fluid-container cls-album" id="cls-album">
+             
             </div>
           </div>
           <div class="col-xs-3 mv-map">
-            <div id="map-detail"></div>
+            <iframe id="embed_map" src = "" style="width: 100%;height: 100%;"></iframe>
           </div>
           <div class="col-xs-8 mv-cmt">
             <div class="mv-cmt-owner">
@@ -148,33 +105,58 @@
                     <h3>Heading</h3>
                     <p>Content aa asdfasdfjal</p>    
                 </div>
+              </div>
+              <div class="wf-box">
+                <img src="{{URL::asset('img/5.jpg')}}">
+                <div class="content">
+                    <h3>Heading</h3>
+                    <p>Content aa asdfasdfjal</p>    
+                </div>
               </div>   
           </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
   <script>
+    $(document).ready(function(){
+      var waterfall = new Waterfall({
+          minBoxWidth: 250
+      });
+    });
     $('.dropdown-menu li, .dropdown-menu textarea').click(function(e) {
       e.stopPropagation();
     });
-    function initMap(lat, lng) {
-      var myLatLng = new google.maps.LatLng(lat, lng);
-      var options = {
-          zoom: 18,
-          center: myLatLng,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-      var mapdetail = new google.maps.Map(document.getElementById('map-detail'), options);           
-
-      
-      var name = "Place.name";
-      var marker = new google.maps.Marker({
-          position: {lat: lat, lng: lng},
-          map: mapdetail,
-          title: name,
-          draggable: true
-      });
-    }
+    $("#fb_share").click(function(){
+      FB.ui(
+        {
+          method: 'share',
+          href: 'http://foodiee.mybluemix.net/explorer',
+        },
+        // callback
+        function(response) {
+          if (response && !response.error_message) {
+            // alert('Posting completed.');
+          } else {
+            // alert('Error while posting.');
+          }
+        }
+      );
+    });
+    $(".mv-listfr li").click(function(){
+      user_id = $(this).data('userid');
+      avatar_link = $(this).data('userlink');
+      post_id = $("#main-post-id").data("id");
+      text = $(".mv-mess").val();
+      $.ajax({
+        url: "{{url('/create_noti')}}",
+        type:"POST",
+        data:{user_id:user_id, text:text, avatar_link:avatar_link, post_id:post_id},
+          success:function(data){
+            if(data){
+              
+            }
+        }});
+    });
     $("#post_like_btn").click(function(){
         likePost($("#main-post-id").data("id"));
     });
@@ -244,7 +226,18 @@
                 $("#main-owner-name").text(data.owner);
                 modal.find("#main-post-id").data("id",data.post_id);
                 modal.find("#main-photo-post").attr("src","{{URL::to('api/photo')}}"+"/"+data.photo_link);
+                modal.find("#cls-board").text(data.board_title);
+                modal.find("#cls-name").text(data.owner);
+                modal.find("#cls-title").attr("src","{{URL::to('api/photo')}}"+"/"+data.photo_link);
                 modal.find("#main-post-description").text(data.description);
+                modal.find("#left-arrow").attr("data-id",$(".box-img-actived").data('idprev'));
+                modal.find("#right-arrow").attr("data-id",$(".box-img-actived").data('idnext'));
+                modal.find("#embed_map").attr('src', "https://maps.google.com/maps?q="+data.places.lat+","+data.places.lng+"&hl=es;z=14&amp&output=embed");
+                //modal.find("#embed_map").attr('src', function () { return $(this).contents().get(0).location.href });
+                for (i = 0; i < data.boards.length; i++) {
+                  modal.find("#cls-album").append("<div class='wf-box'><img data-id='"+data.boards[i]['post_id']+"' src='{{URL::to('api/photo')}}"+"/"+data.boards[i]['photo_link']+"' class='box-img'/></div>");
+                };
+                
                 $(".mv-cmt-itembox img").attr("src",$("#user-avatar-link-profile").attr("src"));
                 $(".mv-cmt-itembox .cmt-chat-owner a").text($("#user-id-info").text().trim());
                 if(data.liked==true)
@@ -256,14 +249,6 @@
                         var comment_box = createCommentBox(data.comments[i].name,"{{URL::to('api/photo')}}"+"/"+data.comments[i].avatar_link,data.comments[i].text);
                         comment_box.insertBefore($(".mv-cmt-itembox")).fadeIn(1000);
                      }
-                }
-                if(data.pins=0){
-                 var val =  $("#post_pin_btn").find("span").text();
-                 $("#post_pin_btn").find("span").text(val +" "+data.pins);
-                 }
-                if(data.likes>0){
-                 var val = $("#post_like_btn").find("span").text();
-                 $("#post_like_btn").find("span").text(val + ""+data.likes);
                 }
                 modal.modal('show');
             }
@@ -282,13 +267,6 @@
         });
         $(".modal-view").on('shown.bs.modal',function(e){
                 console.log("modal view viewed");
-        });
-      $("#post_share_btn").click(function(){
-            FB.ui(
-             {
-              method: 'share',
-              href: window.location.href
-            }, function(response){});
         });
   </script>
 {{-- @stop  --}}

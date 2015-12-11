@@ -63,6 +63,11 @@
           </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
   <script>
+    $(document).ready(function(){
+      var waterfall = new Waterfall({
+          minBoxWidth: 250
+      });
+    });
     name_val = $("#profile-name");
     username_val = $("#profile-username");
     email_val = $("#profile-email");

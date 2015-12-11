@@ -9,7 +9,10 @@ use App\Models\Post;
 use App\Models\LikeEvent;
 use App\Models\CommentEvent;
 use App\Models\UserPosts;
+use App\Models\Place;
 use Auth;
+use DB;
+use XMLWriter;
 class FrontEndController extends Controller{
 	//post login fb
 	public function login(Request $request){
@@ -87,6 +90,40 @@ class FrontEndController extends Controller{
 
 	//get view tìm kiem do an
 	public function searchfoodview(Request $request){
-		return view('map');
+		return view('search-food');
+	}
+	public function genXml(){
+		$center_lat = $_GET['lat'];
+		$center_lng = $_GET['lng'];
+		$radius = $_GET['radius'];
+		
+	 	$datas = Place::select(DB::raw("`place_id`,`name`,`address`, `lat`, `lng`, ( 3959 * acos( cos( radians(?) ) * cos( radians( `lat`) ) * cos( radians( `lng` ) - radians(?) ) + sin( radians(?) ) * sin( radians( `lat` ) ) ) ) AS `distance`"))
+	 		->havingRaw("distance < ?")
+            ->orderBy("distance")
+            ->limit("20")
+            ->setBindings([$center_lat, $center_lng, $center_lat,$radius])
+            ->get()
+            ->toArray();
+        // $rs_post_id = Post::getPostByPlaceId($datas['place_id']);
+     	      
+		$xml = new XMLWriter();
+	    $xml->openMemory();
+	    $xml->startDocument();
+	    $xml->startElement('markers');
+	    foreach($datas as $row) {
+	        $xml->startElement('marker');
+	        $xml->writeAttribute('name', $row['name']);
+	        $xml->writeAttribute('address', $row['address']);
+	        $xml->writeAttribute('lat', $row['lat']);
+	        $xml->writeAttribute('lng', $row['lng']);
+	        $xml->endElement();
+	    }
+	    $xml->endElement();
+	    $xml->endDocument();
+
+	    $content = $xml->outputMemory();
+	    $xml = null;
+
+    	return response($content)->header('Content-Type', 'text/xml');
 	}
 }

@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="{{URL::asset('css/bootstrap.min.css')}}">
 
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300italic,300,100' rel='stylesheet' type='text/css'>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
 
     <link rel="stylesheet" type="text/css" href="{{URL::asset('css/jquery.hashtags.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('css/style.css')}}">
@@ -19,19 +18,64 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="{{URL::asset('js/jquery-2.1.4.min.js')}}"></script>
+    <script src="{{URL::asset('js/handlebars.js')}}"></script>
     <script src="{{URL::asset('js/autosize.min.js')}}"></script>
     <script src="{{URL::asset('js/jquery.hashtags.js')}}"></script>
     <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
     <script src="{{URL::asset('js/responsive_waterfall.js')}}"></script>
     <script src="{{URL::asset('js/typeahead.bundle.js')}}"></script>
-    <script src="{{URL::asset('js/jquery.validate.min.js')}}"></script>
-    <script src="{{URL::asset('js/facebook_connect.js')}}"></script>
-    <script>
-        //DEFINE GLOBAL SERVICE ENDPOINT
-        HOME ="{{url('home')}}";
-    </script>
-     {{--<script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>--}}
+    <script src="{{URL::asset('js/pusher.min.js')}}"></script>
+    
     <title>Fresh Food</title>
+    
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.log = function(message) {
+          if (window.console && window.console.log) {
+            window.console.log(message);
+          }
+        };
+
+        var pusher = new Pusher('0698be6919e98a075011', {
+          encrypted: true
+        });
+        var channel = pusher.subscribe("{{Auth::user()->user_id}}");
+        channel.bind('notification', function(data) {  
+            $("#box_noti").append("<div class='fr_item noti_item' data-noti='"+data.post_id+"'><img src='http://foodieweb.com/api/photo/"+data.avatar_link+"' height='30' width='30' class='logo-profile' style='cursor:pointer;float:left;width:30px !important;'><p style='padding-top: 5px;margin-left: 39px;'>"+data.text+"</p></div>");
+            $(".noti_alert").show();
+        });
+
+        channel.bind('like', function(data) {  
+            console.log(data);
+            $("#box_noti").append("<div class='fr_item noti_item' data-noti='"+data.post_id+"'><img src='http://foodieweb.com/api/photo/"+data.avatar_link+"' height='30' width='30' class='logo-profile' style='cursor:pointer;float:left;width:30px !important;'><p style='padding-top: 5px;margin-left: 39px;'>"+data.name+" vừa like ảnh của bạn</p></div>");
+            $(".noti_alert").show();
+        });
+
+        channel.bind('chat', function(dt) { 
+            channel_chat = pusher.subscribe(dt.channel); 
+            channel_chat.bind('chat', function(data) {  
+                getChatById($('.box-mess'), data.userid);
+                $(".bm-container").append("<div class='mess_item'>"+data.chat+"</div>");
+            });            
+        });
+    </script>
+    
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '1473244306316838',
+              xfbml      : true,
+              version    : 'v2.5'
+            });
+          };
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 </head>
 <body>
     {{-- Thanh menu --}}
@@ -80,25 +124,25 @@
                     </li>
                     @if(Auth::user()!=null)
                     <li>
-                        <a id="user-id-info" data-id="{{Auth::user()->user_id}}" href="{{URL::to(Auth::user()->username)}}">
+                        <a id="user-id-info" data-id="{{Auth::user()->user_id}}" href="{{URL::to('user/'.Auth::user()->username)}}">
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                             {{Auth::user()->name}}
                         </a>
+
                     </li>
                     @endif
                     <li class="dropdown" style="margin-top:5px;">
-                         @if(Auth::user()!=null)
-                        <img src="{{URL::to('/api/photo/')."/".Auth::user()["avatar_link"]}}" height="30" width="30" class="logo-profile" id="user-avatar-link-profile" data-toggle="dropdown" style='cursor:pointer;'>
+                        @if(Auth::user()!=null)
+                        <img src="{{URL::to('/api/photo/')."/".Auth::user()["avatar_link"]}}" height="30" width="30" class="logo-profile dropdown-toggle" id="user-avatar-link-profile dropdownMenu2" data-toggle="dropdown" style='cursor:pointer;' aria-haspopup="true" aria-expanded="true">
+                        <div class="glyphicon glyphicon-exclamation-sign noti_alert"></div>
                         @endif
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2" style="margin-top:26px;">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sửa thông tin</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Đăng xuất</a></li>
-                        </ul>
-                        <span class="caret dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" style='cursor:pointer;'></span>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="margin-top:26px;">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Thông báo</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li role="presentation" id="box_noti">
+                                
+                            </li>
+                            <li role="separator" class="divider"></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sửa thông tin</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
@@ -116,8 +160,8 @@
     </section>
     @include('layout.modal')
     @include('layout.modal-view')
-    {{--@include('layout.sub-menu')--}}
-    {{--@include('layout.modal-message')--}}
+    @include('layout.modal-message')
+    @include('layout.modal-boxfriend')
     <div class="modal fade modal-prgbar">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -130,7 +174,6 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </body>
-<script src="{{URL::asset('js/kc.fab.min.js')}}"></script>
 <script>
     $(document).ready(function(){
 
@@ -140,9 +183,6 @@
         var active4 = false;
 
         $("textarea#board_description").hashtags();
-        var waterfall = new Waterfall({
-            minBoxWidth: 250
-        });
 
         $(".cmt-boxchat").hashtags();
 
@@ -166,15 +206,16 @@
 //            $('#map').show();
             initAutocomplete();
         });
-
-        $('.box-img').on('click', function(){
-//             $('.modal-view').find("#main-photo-post").attr("src");
-//            console.log($(this).data('id'));
+        $(document).on('click', '.box-img', function(){
+            $(".box-img-actived").removeClass("box-img-actived");
+            $(this).addClass("box-img-actived");
             getPostById($('.modal-view'),$(this).data('id'));
         });
-//        $('.wf-box').on('click', function(){
-//            $('.modal-view').modal('show');
-//        });
+        $('#box_noti').delegate('.noti_item','click',function() {
+            $(".box-img-actived").removeClass("box-img-actived");
+            $(this).addClass("box-img-actived");
+            getPostById($('.modal-view'),$(this).data('noti'));
+        });
         $(document).on('click', '#pinit', function(){
             board_id = $(this).data('option');
             description = $('.description').val();
@@ -243,48 +284,9 @@
                 $('.modal-prgbar .progress-bar').css('width', '0%');
                 $('.modal-prgbar .progress-bar').text('00%');
                 $('.modal-prgbar').modal('show');
-
-                // var formData = new FormData();
-                // formData.append("src",input.files[0]);
-                // console.log(formData);
-                // i = 0;
-                // var myVar = setInterval(function(){
-                //     $('.modal-prgbar .progress-bar').css('width', i+'%');
-                //     $('.modal-prgbar .progress-bar').text(i+'%');
-                //     if(i == 100){
-                //         clearInterval(myVar);
-                //     }else{
-                //         i = i + 1;
-                //     }
-                // }, 200);
-                // $.ajax({
-                //     url :"{{url('/api/photo')}}",
-                //     data: {src : image.src},
-                //     type :'POST',
-                //     dataType: 'json',
-                //     processData: false, // Don't process the files
-                //     contentType: false,
-                //    //  xhr: function()
-                //    //  {
-                //    //      var xhr = new window.XMLHttpRequest();
-                //    //      //Upload progress
-                //    //      xhr.upload.addEventListener("progress", function(evt){
-                //    //        if (evt.lengthComputable) {
-                //    //          var percentComplete = evt.loaded / evt.total;
-                //    //          //Do something with upload progress
-                //    //          console.log(percentComplete);
-                //    //        }
-                //    //      }, false);
-                //    //      return xhr;
-                //    // },
-                // }).success(function(evt){
-                //     console.log(evt);
-                // });
             }
-        // reader.readAsDataURL(input.files[0]);
         }
     }
 </script>
-<script src="{{URL::asset('js/kc.fab.min.js')}}"></script>
 <script type="text/javascript"src="{{URL::asset('js/autocomplete_search.js')}}"></script>
 </html>

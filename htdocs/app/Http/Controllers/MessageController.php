@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\App;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class MessageController extends Controller
 {
@@ -24,9 +25,29 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $friend_id = $request->input("id");
+        $result = User::getUserById($friend_id);
+        return $result;
+    }
+
+    public function createchat(Request $request)
+    {
+        $chat = $request->input("chat");
+        $channel = $request->input("channel");
+        $userid = $request->input("userid");
+        $friendid = $request->input("friendid");
+        $pusher = App::make('pusher');
+
+        $pusher->trigger( $friendid,
+                        'chat', 
+                        array('channel' => $channel));
+        
+        $pusher->trigger( $channel,
+                        'chat', 
+                        array('chat' => $chat,
+                            'userid' => $userid));
     }
 
     /**
@@ -83,5 +104,10 @@ class MessageController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function getInbox(){
+        $message = new Message();
+        $result = $message->getInbox(10);
+        return response()->json($result);
     }
 }
