@@ -95,7 +95,7 @@ return [
     |
     */
 
-    'log' => 'single',
+    'log' => 'syslog',
 
     /*
     |--------------------------------------------------------------------------
@@ -144,7 +144,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
+//        Intervention\Image\ImageServiceProvider::class,
         Vinkla\Pusher\PusherServiceProvider::class,
     ],
 
@@ -198,7 +198,7 @@ return [
         // 'Html' => Illuminate\Html\HtmlFacade::class
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
-        'Image' => 'Intervention\Image\Facades\Image',
+        //'Image' => 'Intervention\Image\Facades\Image',
     ],
 
 ];
