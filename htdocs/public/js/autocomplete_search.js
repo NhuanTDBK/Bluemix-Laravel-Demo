@@ -20,7 +20,8 @@ var mySuggest = new Bloodhound({
                 return {
                     name:user.name,
                     avatar_link:"api/photo/"+user.avatar_link,
-                    id:user._id
+                    id:user._id,
+					username:user.username
                 }
             });
         },
@@ -36,12 +37,13 @@ $('#search-textbox').typeahead(null,{
     displayKey:"name",
     name:"name",
     templates:{
-        suggestion: Handlebars.compile("<p onclick='clickResult(this)' class='show_result' data-id='{{id}}' style='padding:6px;cursor: pointer'> <img class='logo-profile' height='30' width='30' src='{{avatar_link}}'/><b>{{name}}</b></p>"),
+        suggestion: Handlebars.compile("<p onclick='clickResult(this)' class='show_result' data-username='{{username}}' data-id='{{id}}' style='padding:6px;cursor: pointer'> <img class='logo-profile' height='30' width='30' src='{{avatar_link}}'/><b>{{name}}</b></p>"),
         footer:Handlebars.compile("<b>Search for '{{QUERY}}'</b>"),
         notFound:"Please try another keyword",
         pending:"Searching..."
     }
 });
 function clickResult(e){
-    console.log(e);
+	var url = "/user/"+$(e).data('username');
+    window.location = url;
 }
