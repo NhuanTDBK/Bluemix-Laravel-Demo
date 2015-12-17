@@ -25,40 +25,7 @@
     <script src="{{URL::asset('js/responsive_waterfall.js')}}"></script>
     <script src="{{URL::asset('js/typeahead.bundle.js')}}"></script>
     <script src="{{URL::asset('js/pusher.min.js')}}"></script>
-	<script src="{{URL::asset('js/facebook_connect.js')}}"></script>
     <title>Fresh Food</title>
-    
-    <script>
-        // Enable pusher logging - don't include this in production
-        Pusher.log = function(message) {
-          if (window.console && window.console.log) {
-            window.console.log(message);
-          }
-        };
-
-        var pusher = new Pusher('0698be6919e98a075011', {
-          encrypted: true
-        });
-        var channel = pusher.subscribe("{{Auth::user()->user_id}}");
-        channel.bind('notification', function(data) {  
-            $("#box_noti").append("<div class='fr_item noti_item' data-noti='"+data.post_id+"'><img src='http://foodieweb.com/api/photo/"+data.avatar_link+"' height='30' width='30' class='logo-profile' style='cursor:pointer;float:left;width:30px !important;'><p style='padding-top: 5px;margin-left: 39px;'>"+data.text+"</p></div>");
-            $(".noti_alert").show();
-        });
-
-        channel.bind('like', function(data) {  
-            console.log(data);
-            $("#box_noti").append("<div class='fr_item noti_item' data-noti='"+data.post_id+"'><img src='http://foodieweb.com/api/photo/"+data.avatar_link+"' height='30' width='30' class='logo-profile' style='cursor:pointer;float:left;width:30px !important;'><p style='padding-top: 5px;margin-left: 39px;'>"+data.name+" vừa like ảnh của bạn</p></div>");
-            $(".noti_alert").show();
-        });
-
-        channel.bind('chat', function(dt) { 
-            channel_chat = pusher.subscribe(dt.channel); 
-            channel_chat.bind('chat', function(data) {  
-                getChatById($('.box-mess'), data.userid);
-                $(".bm-container").append("<div class='mess_item'>"+data.chat+"</div>");
-            });            
-        });
-    </script>
 </head>
 <body>
     {{-- Thanh menu --}}
@@ -130,14 +97,13 @@
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
                             <li role="presentation" class="divider"></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('user/logout')}}">Đăng xuất</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('logout')}}">Đăng xuất</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <script>console.log("index");</script>
     <section class="layout-mainpage">
         @yield('grid-layout')
     </section>
@@ -270,6 +236,13 @@
             }
         }
     }
+    function getUserId(){
+        return $("#user-id-info").data("id");
+    }
 </script>
+{{--
+    Post loading: autocomplete search and pusher inbox
+--}}
 <script type="text/javascript"src="{{URL::asset('js/autocomplete_search.js')}}"></script>
+<script src="{{URL::asset('js/pusher_inbox.js')}}"></script>
 </html>
