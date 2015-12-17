@@ -36,7 +36,7 @@
               $.ajax({
                   type: "POST",
                   url: "{{url('/login-fb')}}",
-                  cache: false,
+                  async:false,
                   data: {response : response},
                   success: function(data){
                     console.log(data);

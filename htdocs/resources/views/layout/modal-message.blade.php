@@ -1,4 +1,8 @@
 @section('modal')
+{{--
+    Modal message
+    Editor by TungHT
+--}}
 <div class="box-mess">
   <div class="bm-header">
     <a id="friend_profile" href="">Tùng</a>
@@ -20,27 +24,22 @@
   });
   $("#mess_chat").on('keyup', function(e){
     if (e.which == 13 || e.keyCode == 13) {
-      chat = $(this).val();
-      userid = "{{Auth::user()->user_id}}";
-      friendid = $(".box-mess").data('chatid');
-
-      if(userid < friendid){
-        channel = userid +""+friendid;
-      }else{
-        channel = friendid +""+userid;
-      }
-      $.ajax({
-        url: "{{url('/create-chat')}}",
-        type:"POST",
-        data:{channel:channel, chat:chat, userid:userid, friendid:friendid},
-          success:function(data){
-            channel_chat = pusher.subscribe(channel); 
-            channel_chat.bind('chat', function(data) {  
-                $(".bm-container").append("<div class='mess_item'>"+data.chat+"</div>");
-            }); 
-            $(this).val("");
-            $(".bm-container").append("<div class='mess_item_owner'>"+chat+"</div>");
-        }});
+      var chat = $(this).val();
+      {{--var userid = "{{Auth::user()->user_id}}";--}}
+      var friendid = $(".box-mess").data('chatid');
+      console.log("Send message");
+      var data = {
+        "text":chat,
+        "receiver_id":friendid
+      };
+      var url = "{{URL::to('api/messages')}}";
+      $("#mess_chat").val("");
+      $(".bm-container").append("<div class='mess_item_owner'>"+chat+"</div>");
+      $.post(url,data,function(data) {
+            if(data.result=="failed"){
+                console.log("Error on sending");
+            }
+      });
     }
   });  
 </script>

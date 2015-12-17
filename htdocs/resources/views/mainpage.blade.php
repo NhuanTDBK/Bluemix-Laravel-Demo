@@ -1,7 +1,15 @@
 @extends('layout.index')
 <link href="{{URL::asset('img/logo.png')}}" rel="icon" type="image/png" sizes="96x96" >
 @section('grid-layout')
-	<div class="wf-container" style="margin-top:50px;">
+<script type="text/javascript">
+    $(document).ready(function(){
+        var waterfall = new Waterfall({
+            minBoxWidth: 250
+        });
+        $(".wf-container").fadeIn(1200);
+    });
+</script>
+	<div class="wf-container" style="margin-top:50px;display:none">
         <div class="wf-box" style="border: none;">
             <div class="content" style="background-color:#fff;webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);border-top-left-radius: 6px;border-top-right-radius: 6px;'">
                 <div class='invitefr'>
@@ -93,11 +101,5 @@
             @endif
         @endforeach
     </div>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            var waterfall = new Waterfall({
-                minBoxWidth: 250
-            });
-        });
-    </script>
+
 @stop

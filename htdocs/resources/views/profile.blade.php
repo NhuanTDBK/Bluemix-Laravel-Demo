@@ -20,25 +20,25 @@
                     @if($user["user_id"]==Auth::user()->user_id)
                         <button id="btn-edit" class="btn follow_btn">
                             <em></em>
-                            <span>Chỉnh sửa trang cá nhân</span>
+                            <span>Edit Profile</span>
                         </button>
                     @else
                         @if(!isset($user["follow"]))
                             <button id="btn-follow" class="btn follow_btn" data-id="1">
                                 <em></em>
-                                <span data-user="{{$user["user_id"]}}">Theo dõi</span>
+                                <span data-user="{{$user["user_id"]}}">Follow</span>
                             </button>
                         @else
                             <button id="btn-follow" class="btn follow_btn" data-id="1">
                                 <em></em>
-                                <span data-user="{{$user["user_id"]}}">Đang theo dõi</span>
+                                <span data-user="{{$user["user_id"]}}">Followed</span>
                             </button>
                         @endif
                     @endif
                 @else
                     <button id="btn-follow" class="btn follow_btn" data-id="0">
                         <em></em>
-                        <span>Theo dõi</span>
+                        <span>Follow</span>
                     </button>
                 @endif
             </h3>
@@ -226,7 +226,7 @@
                 $.post(url,data,function(data)
                 {
                     // console.log(data);
-                    if(data.result=="followed") text = "Đã theo dõi"; else {text = "Theo dõi"; }
+                    if(data.result=="followed") text = "Followed"; else {text = "Follow"; }
                     $("#btn-follow").find('span').text(text);
                 },'json');
             }

@@ -22,19 +22,17 @@
 </div>
 
 <script type="text/javascript">
-  $(document).ready(function(){
-    var waterfall = new Waterfall({
-        minBoxWidth: 250
-    });
-  });
+//  $(document).ready(function(){
+//    var waterfall = new Waterfall({
+//        minBoxWidth: 250
+//    });
+//  });
   $('#search_fr').click(function(e) {
     e.stopPropagation();
   });
-  $('#chat_list li').click(function() {
-    friendid = $(this).data('chatid');
-    getChatById($('.box-mess'), friendid);
+  $('#chat_list li').click(function(e) {
+    showBox($(this).data('chatid'));
   });
-
   function getChatById(modal,id){
     $.ajax({
       url: "{{url('/create-box-chat')}}",
@@ -44,8 +42,31 @@
           modal.attr("data-chatid",data.user_id);
           modal.find("#friend_profile").attr("href","http://foodieweb.com/"+data.username);
           modal.find("#friend_profile").text(data.name);
-          modal.show();
+          loadConversation(data.message)
       }});
   }
+//  Show hop thoai chat khi co tin nhan moi hoac nguoi dung click chuot
+//  Editor by NhuanTD
+   function showBox(e){
+//          console.log(e);
+        var friendid = e;
+        getChatById($('.box-mess'), friendid);
+        $('.box-mess').show();
+        var user_id = $("#user-id-info").data('id');
+        var channel_name = Math.min(user_id,friendid)+"-"+Math.max(user_id,friendid);
+        var channel = createChannelChat(channel_name);
+    }
+    function loadConversation(data){
+        var modal = $(".bm-container");
+        var user_id = getUserId();
+        for(var i = data.length-1;i>=0;i--){
+            if(data[i].sender_id==user_id.toString()){
+                modal.append("<div class='mess_item_owner'>"+data[i].text+"</div>")
+            }
+            else{
+                modal.append("<div class='mess_item'>"+data[i].text+"</div>")
+            }
+        }
+    }
 </script>
 {{-- @stop  --}}

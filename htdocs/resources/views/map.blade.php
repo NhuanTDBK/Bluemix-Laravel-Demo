@@ -117,7 +117,6 @@
           callback(request.responseText, request.status);
         }
       };
-
       request.open('GET', url, true);
       request.send(null);
     }

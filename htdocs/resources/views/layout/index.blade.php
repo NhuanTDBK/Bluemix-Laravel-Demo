@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{URL::asset('img/logo.png')}}" rel="icon" type="image/png" sizes="96x96" >
-    <link rel="stylesheet" href="{{URL::asset('css/kc.fab.css')}}">
+    
     <link rel="stylesheet" href="{{URL::asset('css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/bootstrap.min.css')}}">
 
@@ -25,6 +25,8 @@
     <script src="{{URL::asset('js/responsive_waterfall.js')}}"></script>
     <script src="{{URL::asset('js/typeahead.bundle.js')}}"></script>
     <script src="{{URL::asset('js/pusher.min.js')}}"></script>
+    <script src="{{URL::asset('js/ion.sound.min.js')}}"></script>
+     <script src="{{URL::asset('js/facebook_connect.js')}}"></script>
     <title>Fresh Food</title>
 </head>
 <body>
@@ -86,7 +88,7 @@
                         <img src="{{URL::to('/api/photo/')."/".Auth::user()["avatar_link"]}}" height="30" width="30" class="logo-profile dropdown-toggle" id="user-avatar-link-profile dropdownMenu2" data-toggle="dropdown" style='cursor:pointer;' aria-haspopup="true" aria-expanded="true">
                         <div class="glyphicon glyphicon-exclamation-sign noti_alert"></div>
                         @endif
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="margin-top:26px;">
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="margin-top:26px;min-width: 250px;">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Thông báo</a></li>
                             <li role="separator" class="divider"></li>
                             <li role="presentation" id="box_noti">

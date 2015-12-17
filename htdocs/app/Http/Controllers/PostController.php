@@ -62,13 +62,16 @@ class PostController extends Controller
         $board_id = $request->input('board_id');
         $user_id = Auth::user()->user_id;
         $photo_link = $request->input('photo_link');
-        $place_lat = $request->input('latitude');
-        $place_lng = $request->input('longitude');
-        $place_name = $request->input('name_address');
-        $place_address = $request->input('address');
-        $place = Place::createPlace($place_name,$place_address,$place_lat,$place_lng);
-        $post = Post::CreatePost($board_id,$description,$photo_link,$user_id,$place,null);
-        return response()->json($post);
+        if($request->input('name_address')!=null){
+            $place_lat = $request->input('latitude');
+            $place_lng = $request->input('longitude');
+            $place_name = $request->input('name_address');
+            $place_address = $request->input('address');
+            $place = Place::createPlace($place_name,$place_address,$place_lat,$place_lng);
+            $post = Post::CreatePost($board_id,$description,$photo_link,$user_id,$place,null);
+        }
+        $post = Post::CreatePost($board_id,$description,$photo_link,$user_id,null,null);
+        return response()->json(true);
     }
 
     /**
@@ -89,6 +92,8 @@ class PostController extends Controller
         $post["pins"] = $post_stat["pins"];
         $post["boards"]= Board::getPostsInBoard($post["board_id"]);
         $post["places"]= Place::getPlaceById(Post::getPostById($post_id)['place_id']);
+        $recommend = new RecommendController();
+        $post["recommend_posts"]=$recommend->getPost($post_id);
         return response()->json($post);
     }
 
@@ -148,5 +153,8 @@ class PostController extends Controller
         $post = UserPosts::getPostById($post_id);
         $post_stat = PostDetails::getDetails($post_id);
         return [$post,$post_stat];
+    }
+    public function getPostByPlaceId(){
+
     }
 }

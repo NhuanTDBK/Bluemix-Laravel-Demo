@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserPosts;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+//use App\Http\Controllers\Controller;
 use Es;
-use Elasticsearch\Client;
-use App\Http\Controllers\SearchController;
+//use Elasticsearch\Client;
+//use App\Http\Controllers\SearchController;
 use App\Models\Post;
 use Config;
 //define("INDEX_NAME","foodiee");
@@ -93,22 +94,24 @@ class RecommendController extends Controller
         //
     }
     public function getPost($post_id){
-        $client = new Client();
-        $post = Post::getPostById($post_id);
-        $index_name = Config::get('elasticsearch.index_name');
-        $post_type = Config::get('elasticsearch.post_type');
-        $params = [
-            "index"=>$index_name,
-            "analyzer"=>'vi_analyzer',
-            'text'=>$post["description"]
-        ];
-        $tokens = $client->indices()->analyze($params)["tokens"];
-        $search = new SearchController();
-        $results = [];
-        foreach($tokens as $token){
-            $query  = ["description"=>$token["token"]];
-            $results[] = $search->search($post_type,$query);
-        }
+//        $client = new Client();
+//        $post = Post::getPostById($post_id);
+//        $index_name = Config::get('elasticsearch.index_name');
+//        $post_type = Config::get('elasticsearch.post_type');
+//        $params = [
+//            "index"=>$index_name,
+//            "analyzer"=>'vi_analyzer',
+//            'text'=>$post["description"]
+//        ];
+//        $tokens = $client->indices()->analyze($params)["tokens"];
+//        $search = new SearchController();
+//        $results = [];
+//        foreach($tokens as $token){
+//            $query  = ["description"=>$token["token"]];
+//            $results[] = $search->search($post_type,$query);
+//        }
+        $owner = Post::getPostById($post_id)["user_id"];
+        $results = UserPosts::where('post_id','!=','$post_id')->where('user_id','!=',$owner)->take(10)->get();
         return $results;
     }
 }

@@ -27,7 +27,8 @@ class UserPosts extends Model
         }
 	}
     public static function getPostsByPlaceId($place_id){
-        $lists = UserPosts::where('place_id',$place_id)->get();
+        if(isset($place_id))
+            $lists = UserPosts::where('place_id',$place_id)->get();
         return $lists;
     }
 }

@@ -574,7 +574,7 @@ input::-webkit-input-placeholder {
     cursor: pointer;
 }
 .search_post{
-        position: absolute;
+    position: absolute;
     right: 10px;
     z-index: 1029;
     margin-top: 40px;
@@ -767,8 +767,8 @@ input::-webkit-input-placeholder {
 .mv-title .dropdown-menu{
     width: 250px;
     max-height: 380px;
-    top: 6%;
-    left: 41%;
+    top: 3%;
+    left: 55%;
     webkit-box-shadow: 0 1px 5px 0 rgba(0,0,0,0.25);
     box-shadow: 0 1px 5px 0 rgba(0,0,0,0.25);
 }
@@ -825,7 +825,7 @@ input::-webkit-input-placeholder {
     margin-top: 10px;
 }
 .mv-listfr li p{
-    width: 150px;
+    width: 100%;
     height: 35px;
     padding-top: 15px;
     padding-left: 48px;
@@ -1314,14 +1314,16 @@ input::-webkit-input-placeholder {
     margin-top: 0;
     padding: 10px;
     width: 100%;
+    padding-right: 40px;
+    overflow:hidden;
     outline: none;
 }
 .col-xs-3 .box-img-card{
-    border-top: none; 
+    border-top: none;
 }
 #search_fr{
     border: 0px solid #ccc;
-    border-radius: 0px; 
+    border-radius: 0px;
 }
 #chat_list{
     left: -175px !important;
@@ -1329,10 +1331,6 @@ input::-webkit-input-placeholder {
     max-height: 200px;
     overflow-y: auto;
     width: 250px;
-}
-.list_food .wf-box {
-    float: left;
-    width: 22%;
 }
 /*popup message*/
 
@@ -1368,7 +1366,7 @@ input::-webkit-input-placeholder {
     .modal-profile .modal-dialog{width: 300px;margin-top: 45px;}
     .modal-profile .modal-body{padding-bottom: 0px !important;}
     .form-horizontal .control-label{text-align: left !important;}
-    .user-profile-list{margin-left: 10px; margin-top: 10px;}
+    .user-profile-list{margin-left: 35px; margin-top: 10px;}
     .user-profile-list li{width: 120px;}
     .right-side{height: 210px;}
     #tab2 .wf-box{width: 95%;}
@@ -1377,6 +1375,7 @@ input::-webkit-input-placeholder {
     .ml-fblogin{width: 80%;top: 100px;left: 10%;}
     .ml-line-text{left: 38%;}
     .ml-formlogin{width: 80%;left: 10%;}
+    .grid-board-fl li{width: 123px;}
 }
 @media screen and (min-width: 768px) {
     .navbar-fixed-top{width: 100% !important;}
@@ -1403,11 +1402,9 @@ input::-webkit-input-placeholder {
 }
 @media screen  and (min-width: 992px) {
     .wf-container { width: 90%; }
-    .nav>li>a{padding: 10px 15px;}
 }
 @media screen and (min-width: 1200px) {
     .wf-container { width: 90%; }
-    .nav>li>a{padding: 10px 15px;}
     .mv-title-send{float: right;margin-left: 0px;}
     .mv-title-share{float: right;margin-left: 10px;width: 92px;}
     .modal-view .modal-dialog{margin:0px !important; margin-top: 45px !important;}
@@ -1422,6 +1419,7 @@ input::-webkit-input-placeholder {
     .user-profile-list{margin-left: 350px;}
     #tab2 .wf-box{width: 23%;}
     .modal-login .modal-dialog{width: 50%;top: 120px;left: 25%;position: absolute;}
+    .grid-board-fl li{width: 130px;}
 }
 .object-fit_contain {
     object-fill:contain;
@@ -1541,23 +1539,23 @@ input::-webkit-input-placeholder {
     -webkit-box-shadow: 0 0 2px rgba(0,0,0,0.33) inset;
     box-shadow: 0 0 2px rgba(0,0,0,0.33) inset;
     border-radius: 6px;
-    margin-right: 5.5px;
+    margin-right: 5px;
     float: left;
 }
 .grid-board-fl{
-    min-height: 190px;
+    min-height: 210px;
     background: #fff;
     border-radius: 6px;
     border: 1px solid #ccc;
     padding: 10px;
 }
 .grid-board-fl li{
-    width: 120px;
+    height: 90px;
     -webkit-box-shadow: 0 0 2px rgba(0,0,0,0.33) inset;
     box-shadow: 0 0 2px rgba(0,0,0,0.33) inset;
     border-radius: 6px;
     margin-bottom: 10px;
-    margin-right: 5px;
+    margin-right: 9px;
     float: left;
 }
 .grid-board-fl .list-group-item:first-child {

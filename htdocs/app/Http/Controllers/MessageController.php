@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-
+use Auth;
 class MessageController extends Controller
 {
     /**
@@ -29,6 +30,11 @@ class MessageController extends Controller
     {
         $friend_id = $request->input("id");
         $result = User::getUserById($friend_id);
+        $user_id = Auth::user()->user_id;
+        $pusher = App::make('pusher');
+        $pusher->trigger(strval($friend_id),'onShowChatBox',['user'=>Auth::user()]);
+        $messages = new Message();
+        $result["message"] = $messages->getConversation($user_id,$friend_id,5);
         return $result;
     }
 
@@ -49,7 +55,6 @@ class MessageController extends Controller
                         array('chat' => $chat,
                             'userid' => $userid));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -59,6 +64,14 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         //
+        $text = $request->input('text');
+        $receiver_id = $request->input("receiver_id");
+        $result = Message::saveMessage($text,$receiver_id);
+        if(!$result){
+            $res = ["result"=>"failed"];
+        }
+        else $res = ["result"=>"done"];
+        return response()->json($res);
     }
 
     /**

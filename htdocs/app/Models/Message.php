@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Auth;
+use DB;
+use Illuminate\Support\Facades\App;
 class Message extends Model
 {
     //
@@ -12,8 +14,15 @@ class Message extends Model
     public function getMessages($user_id){
 
     }
-    public function createChannel($sender,$receiver){
-        $result = min($sender,$receiver).':'.max($sender,$receiver);
+//    protected $pusher;
+//    public function __construct()
+//    {
+//        // TODO: Implement __construct() method.
+//        parent::__construct();
+//    }
+
+    public function getChannel($sender,$receiver){
+        $result = min($sender,$receiver).'-'.max($sender,$receiver);
         return $result;
     }
     public function generateData(){
@@ -39,9 +48,9 @@ class Message extends Model
 //        }
 //        return $list_userid;
     }
-    public function getConversation($from,$to){
-        $channel = $this->createChannel($from,$to);
-        $messages = Message::where("TID",$channel)->take(20)->orderBy('created_at','desc')->get();
+    public function getConversation($from,$to,$number){
+        $channel = $this->getChannel($from,$to);
+        $messages = Message::where("TID",$channel)->take($number)->orderBy('created_at','desc')->get();
         return $messages;
     }
     public function getInbox($user_id){
@@ -58,5 +67,18 @@ class Message extends Model
                                     ->groupBy('TID')
                                     ->orderBy('created_at');
        return $query->get();
+    }
+    public static function saveMessage($text,$receiver_id){
+        $message = new Message();
+        $sender_id = Auth::user()->user_id;
+        $channel = $message->getChannel($sender_id,$receiver_id);
+        $message->sender_id = $sender_id;
+        $message->receiver_id = $receiver_id;
+        $message->text = $text;
+        $message->TID = $channel;
+        $pusher = App::make('pusher');
+        $pusher->trigger($channel,'messages:onsend',['message'=>$text,'sender_id'=>$sender_id]);
+        $message->save();
+        return $message;
     }
 }
