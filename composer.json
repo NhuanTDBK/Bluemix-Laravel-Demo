@@ -9,8 +9,6 @@
         "laravel/framework": "5.1.*",
 		"elasticsearch/elasticsearch": "~1.0",
         "laravelcollective/html": "^5.1",
-        "league/flysystem": "^1.0",
-        "intervention/image": "^2.3",
         "vinkla/pusher": "^2.2",
         "predis/predis": "^1.0",
         "guzzlehttp/guzzle": "^6.1",
