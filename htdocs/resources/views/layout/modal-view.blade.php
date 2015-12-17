@@ -126,6 +126,9 @@
     $('.dropdown-menu li, .dropdown-menu textarea').click(function(e) {
       e.stopPropagation();
     });
+    /*
+        Ham share bai post len fb
+     */
     $("#fb_share").click(function(){
       FB.ui(
         {
@@ -142,6 +145,8 @@
         }
       );
     });
+    //Editor: Tunght
+    //Code gui tin nhan
     $(".mv-listfr li").click(function(){
       user_id = $(this).data('userid');
       avatar_link = $(this).data('userlink');
@@ -153,7 +158,7 @@
         data:{user_id:user_id, text:text, avatar_link:avatar_link, post_id:post_id},
           success:function(data){
             if(data){
-              
+
             }
         }});
     });
@@ -237,11 +242,13 @@
                 for (i = 0; i < data.boards.length; i++) {
                   modal.find("#cls-album").append("<div class='wf-box'><img data-id='"+data.boards[i]['post_id']+"' src='{{URL::to('api/photo')}}"+"/"+data.boards[i]['photo_link']+"' class='box-img'/></div>");
                 };
-                
+
                 $(".mv-cmt-itembox img").attr("src",$("#user-avatar-link-profile").attr("src"));
                 $(".mv-cmt-itembox .cmt-chat-owner a").text($("#user-id-info").text().trim());
                 if(data.liked==true)
-                     modal.find("#post_like_btn").find('span:first').text("Đã thích");
+                     modal.find("#post_like_btn").find('span:first').text("Liked");
+                else
+                    modal.find("#post_like_btn").find('span:first').text("Like");
                 if(data.comments.length>0)
                 {
                     console.log("into");
