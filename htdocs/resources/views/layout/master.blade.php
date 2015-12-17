@@ -46,22 +46,6 @@
             }
             .entry-header { padding-top: 20px; background-color: #fff; width:100%; position: fixed; top: 0; left: 0; z-index: 999999}
         </style>
-        <script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                  appId      : '1473244306316838',
-                  xfbml      : true,
-                  version    : 'v2.5'
-                });
-              };
-            (function(d, s, id){
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
     </head>
     <body class="loading">  
         <main>     
@@ -138,6 +122,7 @@
         <script src="{{URL::asset('js/imagesloaded.js')}}"></script>
         <script src="{{URL::asset('js/skrollr.js')}}"></script>
         <script src="{{URL::asset('js/_main.js')}}"></script>
+		<script src="{{URL::asset('js/facebook_connect.js')}}"></script>
         <script type="text/javascript">
             $('#showup').on('click', function(){
                 $(".modal-login").modal('show');

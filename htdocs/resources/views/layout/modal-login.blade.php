@@ -28,11 +28,6 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
    <script type="text/javascript">
-      $(document).ready(function(){
-        var waterfall = new Waterfall({
-            minBoxWidth: 250
-        });
-      });
       $('.ml-fblogin').on('click', function(){
         FB.login(function(response) {
           if (response.authResponse) {

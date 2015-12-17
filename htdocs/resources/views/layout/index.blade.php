@@ -25,7 +25,7 @@
     <script src="{{URL::asset('js/responsive_waterfall.js')}}"></script>
     <script src="{{URL::asset('js/typeahead.bundle.js')}}"></script>
     <script src="{{URL::asset('js/pusher.min.js')}}"></script>
-    
+	<script src="{{URL::asset('js/facebook_connect.js')}}"></script>
     <title>Fresh Food</title>
     
     <script>
@@ -58,23 +58,6 @@
                 $(".bm-container").append("<div class='mess_item'>"+data.chat+"</div>");
             });            
         });
-    </script>
-    
-    <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-              appId      : '1473244306316838',
-              xfbml      : true,
-              version    : 'v2.5'
-            });
-          };
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
     </script>
 </head>
 <body>
