@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests;
+use App\Models\Post;
 use App\Models\UserPosts;
+use Config;
+use Es;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 //use App\Http\Controllers\Controller;
-use Es;
 //use Elasticsearch\Client;
 //use App\Http\Controllers\SearchController;
-use App\Models\Post;
-use Config;
 //define("INDEX_NAME","foodiee");
 //define("USER_TYPE","user");
 //define("POST_TYPE","post");
@@ -111,7 +111,7 @@ class RecommendController extends Controller
 //            $results[] = $search->search($post_type,$query);
 //        }
         $owner = Post::getPostById($post_id)["user_id"];
-        $results = UserPosts::where('post_id','!=','$post_id')->where('user_id','!=',$owner)->take(10)->get();
+        $results = UserPosts::where('post_id', '!=', '$post_id')->where('user_id', '!=', $owner)->take(10)->get();
         return $results;
     }
 }

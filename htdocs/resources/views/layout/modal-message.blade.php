@@ -12,7 +12,8 @@
 
   </div>
   <div class="bm-footer">
-    <textarea placeholder="Thêm tin nhắn" id='mess_chat'></textarea>
+    <textarea placeholder="Thêm tin nhắn" id="mess_chat"></textarea>
+    <span class="glyphicon glyphicon-share-alt" style="cursor:pointer;margin-top: -45px;float: right;color: blue;" id='text-box'></span>
   </div>  
 </div>
 
@@ -22,9 +23,8 @@
   $('.bm-close').on('click', function(){
     $('.box-mess').hide();
   });
-  $("#mess_chat").on('keyup', function(e){
-    if (e.which == 13 || e.keyCode == 13) {
-      var chat = $(this).val();
+  $("#text-box").on('click', function(e){
+      var chat = $("#mess_chat").val();
       {{--var userid = "{{Auth::user()->user_id}}";--}}
       var friendid = $(".box-mess").data('chatid');
       console.log("Send message");
@@ -40,7 +40,6 @@
                 console.log("Error on sending");
             }
       });
-    }
   });  
 </script>
 {{-- @stop  --}}

@@ -130,72 +130,30 @@
             @endforeach
         </div> 
         <div id="tab3" class="wf-container tab-pane" style="margin: 40 auto;width: 90%;">
-            <div class="wf-box col-sm-3" data-id="11">
+            <div class="wf-box col-sm-3">
                 <ul class="grid-board-fl list-group">
-                    <li class="list-group-item">
-                        <img src="img/5.jpg" class="box-img" data-id="11"/>
-                    </li>
-                    <li class="list-group-item">
-                        <img src="img/5.jpg" class="box-img" data-id="11"/>
-                    </li>
-                    <li class="list-group-item">
-                        <img src="img/5.jpg" class="box-img" data-id="11"/>
-                    </li>
-                    <li class="list-group-item">
-                        <img src="img/5.jpg" class="box-img" data-id="11"/>
-                    </li>
-                </ul>   
-            </div>
-            <div class="wf-box col-sm-3" data-id="11">
-                <ul class="grid-board-fl list-group">
-                    <li class="list-group-item">
-                        <img src="img/5.jpg" class="box-img" data-id="11"/>
-                    </li>
-                    <li class="list-group-item">
-                        <img src="img/5.jpg" class="box-img" data-id="11"/>
-                    </li>
-                    <li class="list-group-item">
-                        <img src="img/5.jpg" class="box-img" data-id="11"/>
-                    </li>
-                    <li class="list-group-item">
-                        <img src="img/5.jpg" class="box-img" data-id="11"/>
-                    </li>
-                </ul>   
+                    @foreach($followers as $key => $value)
+                    <a href="{{url('/user')."/".$value->username}}">
+                        <li class="list-group-item">
+                            <img src="{{URL::to('/api/photo/')."/".$value->avatar_link}}" style="height: 100%;" />
+                        </li>
+                    </a>
+                    @endforeach
+                </ul>
             </div>
         </div>
         <div id="tab4" class="wf-container tab-pane" style="margin: 40 auto;width: 90%;">
-            <div class="wf-box col-sm-3" data-id="11">
+            <div class="wf-box col-sm-3">
                 <ul class="grid-board-fl list-group">
-                    <li class="list-group-item">
-                        <img src="img/6.jpg" class="box-img" data-id="11"/>
-                    </li>
-                    <li class="list-group-item">
-                        <img src="img/6.jpg" class="box-img" data-id="11"/>
-                    </li>
-                    <li class="list-group-item">
-                        <img src="img/6.jpg" class="box-img" data-id="11"/>
-                    </li>
-                    <li class="list-group-item">
-                        <img src="img/6.jpg" class="box-img" data-id="11"/>
-                    </li>
-                </ul>   
-            </div>
-            <div class="wf-box col-sm-3" data-id="11">
-                <ul class="grid-board-fl list-group">
-                    <li class="list-group-item">
-                        <img src="img/5.jpg" class="box-img" data-id="11"/>
-                    </li>
-                    <li class="list-group-item">
-                        <img src="img/5.jpg" class="box-img" data-id="11"/>
-                    </li>
-                    <li class="list-group-item">
-                        <img src="img/5.jpg" class="box-img" data-id="11"/>
-                    </li>
-                    <li class="list-group-item">
-                        <img src="img/5.jpg" class="box-img" data-id="11"/>
-                    </li>
-                </ul>   
-            </div>
+                    @foreach($followings as $key => $value)
+                    <a href="{{url('/user')."/".$value->username}}">
+                        <li class="list-group-item">
+                            <img src="{{URL::to('/api/photo/')."/".$value->avatar_link}}" style="height: 100%;" />
+                        </li>
+                    </a> 
+                    @endforeach  
+                </ul>
+            </div>    
         </div> 
     </div>   
     <script type="text/javascript">

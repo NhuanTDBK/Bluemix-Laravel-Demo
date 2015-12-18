@@ -183,8 +183,15 @@ class UserController extends Controller
         $list = UserPosts::getPostByUserId($id);
         $profile = User::getProfile($id);
         $boards = Board::getPreviewBoardsByUserId($id);
+        $followers = FollowEvent::getFollower($id);
+        $following = FollowEvent::getFollowing($id);
         if($user)
-            return response()->view('profile',["user"=>$user,"posts"=>$list,"profile"=>$profile,"boards"=>$boards]);
+            return response()->view('profile',["user"=>$user,
+                                                "posts"=>$list,
+                                                "profile"=>$profile,
+                                                "boards"=>$boards,
+                                                "followers"=>$followers,
+                                                "followings"=>$following]);
         else 
             return response()->json("Not found");
     }

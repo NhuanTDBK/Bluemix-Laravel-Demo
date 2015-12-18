@@ -74,7 +74,7 @@
               <div class="cmt-chat" id="main-post-description"></div>
             </div>
             <div class="mv-cmt-itembox">
-              <img src="img/5.jpg" class="logo-profile cmt-avatar-owner">
+              <img src="img/5.jpg" class="logo-profile cmt-avatar-owner" id="cmt-avatar-owner">
               <div class="cmt-chat-owner">
                 <a>Tung</a>
                 <textarea id="main-comment-btn" class="cmt-boxchat" placeholder="Thêm bình luận"></textarea>
@@ -87,7 +87,7 @@
              <div class="wf-box" data-id="">
              {{--Link ảnh--}}
                  <img src="" class="box-img" data-id="" data-idnext="" data-idprev=""/>
-                 <div class="content">
+                <div class="content">
                  {{--Description--}}
                      <h3 class="box-img-des"></h3>
                      <div class="box-img-card">
@@ -99,12 +99,11 @@
                              </p>
                              {{--Ten board--}}
                              <h4 class="card-title"></h4>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-          </div>
-          </div>
+                </div>
+              </div>
+                </div>
+              </div>
+                </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
@@ -150,7 +149,7 @@
         data:{user_id:user_id, text:text, avatar_link:avatar_link, post_id:post_id},
           success:function(data){
             if(data){
-
+              
             }
         }});
     });
@@ -227,6 +226,8 @@
                 modal.find("#cls-name").text(data.owner);
                 modal.find("#cls-title").attr("src","{{URL::to('api/photo')}}"+"/"+data.photo_link);
                 modal.find("#main-post-description").text(data.description);
+                avl = "{{Auth::user()->avatar_link}}";
+                modal.find("#cmt-avatar-owner").attr("src","{{URL::to('api/photo')}}"+"/"+avl);
                 modal.find("#left-arrow").attr("data-id",$(".box-img-actived").data('idprev'));
                 modal.find("#right-arrow").attr("data-id",$(".box-img-actived").data('idnext'));
                 modal.find("#embed_map").attr('src', "https://maps.google.com/maps?q="+data.places.lat+","+data.places.lng+"&hl=es;z=14&amp&output=embed");
@@ -234,7 +235,7 @@
                 for (i = 0; i < data.boards.length; i++) {
                   modal.find("#cls-album").append("<div class='wf-box'><img data-id='"+data.boards[i]['post_id']+"' src='{{URL::to('api/photo')}}"+"/"+data.boards[i]['photo_link']+"' class='box-img'/></div>");
                 };
-
+                
                 $(".mv-cmt-itembox img").attr("src",$("#user-avatar-link-profile").attr("src"));
                 $(".mv-cmt-itembox .cmt-chat-owner a").text($("#user-id-info").text().trim());
                 if(data.liked==true)

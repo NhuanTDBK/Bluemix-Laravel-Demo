@@ -144,7 +144,7 @@
     <div style="margin-top:23px; width: 100%; height: 350px" id="search-map">
     </div>
     <div class="container" style="width:100%;">
-        <div class="col-md-11 list_food" style="margin-top:40px;width:80%;background-color: #E9E9E9;">
+        <div class="col-xs-11 wf-container" style="margin-top:40px;width:75%;background-color: #E9E9E9;">
             <div class="wf-box">
                 <img src="img/6.jpg">
                 <div class="content">
@@ -211,7 +211,7 @@
                 </div>
             </div>   
         </div> 
-        <div class="col-md-1" style="margin-top:40px;width:20%;background-color: #E9E9E9;">
+        <div class="col-xs-1" style="margin-top:40px;width:25%;background-color: #E9E9E9;">
             <div class="ajbh-chude">Chủ đề</div>
             <ul class="list-group ajbh-list-chude">
                 <li class="list-group-item chd1">Ăn với gia đình</li>

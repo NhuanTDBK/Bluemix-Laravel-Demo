@@ -48,7 +48,7 @@ Route::group(['prefix'=>'api'],function()
     Route::post('/messages','MessageController@store');
     Route::get('genxml','FrontEndController@genXml');
     Route::get('demo-map','FrontEndController@demoMap');
-    Route::get('post/place','PostController@getPostByPlaceId');
+    Route::get('post/place', 'PostController@getPostByPlaceId');
 });
 Route::post('facebook/login', 'FrontEndController@login');
 Route::post('/upload-img', 'FrontEndController@uploadimg');
@@ -70,7 +70,7 @@ Route::get('callback','LoginController@callback');
 Route::post('register',['as'=>'sendRegister', 'uses'=>'LoginController@register']);
 Route::post('login',['as'=>'postLogin', 'uses'=>'UserController@login']);
 // Route::post('postLogin','LoginController@login');
-Route::get('logout','UserController@logout');
+Route::get('logout', 'UserController@logout');
 Route::post('login-fb','LoginController@registerfb');
 Route::get('search/insert','SearchController@insert');
 Route::post('create_noti','NotificationController@create');

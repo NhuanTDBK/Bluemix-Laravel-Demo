@@ -17,7 +17,7 @@
                     <i class="fa fa-chevron-right" style='float:right;cursor:pointer;'></i>
                 </div>
                 @foreach(App\Models\FollowEvent::getFollower(Auth::user()->user_id) as $key => $value)
-                <a href="{{url('/')."/".$value->username}}">
+                <a href="{{url('/user')."/".$value->username}}">
                     <div class="fr_item">
                         <img src="{{URL::to('/api/photo/')."/".$value->avatar_link}}" height="30" width="30" class="logo-profile" style='cursor:pointer;float:left;width:30px !important;'>
                         <p style="padding-top: 5px;margin-left: 39px;">{{$value->name}}</p>
@@ -32,7 +32,7 @@
                     <i class="fa fa-chevron-right" style='float:right;cursor:pointer;'></i>
                 </div>
                 @foreach(App\Models\FollowEvent::getFollowing(Auth::user()->user_id) as $key => $value)
-                <a href="{{url('/')."/".$value->username}}">
+                <a href="{{url('/user')."/".$value->username}}">
                     <div class="fr_item">
                         <img src="{{URL::to('/api/photo/')."/".$value->avatar_link}}" height="30" width="30" class="logo-profile" style='cursor:pointer;float:left;width:30px !important;'>
                         <p style="padding-top: 5px;margin-left: 39px;">{{$value->name}}</p>
