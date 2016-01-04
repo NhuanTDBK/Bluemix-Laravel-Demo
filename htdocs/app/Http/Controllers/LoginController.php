@@ -127,7 +127,11 @@ class LoginController extends Controller {
             $member->name = $res["name"];
             $member->fbid = $res["id"];
             $member->password = Hash::make("nhuan");
-            $member->description = $res['quotes'];
+            if(isset($res['quotes']))
+                $member->description = $res['quotes'];
+            else {
+                $member->description ="";
+            }
             Storage::makeDirectory($member->user_id);
             $member->avatar_link = StorageController::getFile($user_id,$res['picture']['data']['url']);
             $member->cover_link = StorageController::getFile($user_id,$res['cover']['source']);
