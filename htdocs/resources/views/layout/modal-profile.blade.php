@@ -148,7 +148,7 @@
                             // console.log(evt);
                             $('.modal-progressbar').modal('hide');
                             image_url = "{{url('api/photo/')}}"+"/"+evt;
-                            $('#profile-avatarlink').attr('src', image_url+"_75");
+                            $('#profile-avatarlink').attr('src', image_url);
                             $('#profile-avatarlink').attr('data-id',evt);
                         });
                }

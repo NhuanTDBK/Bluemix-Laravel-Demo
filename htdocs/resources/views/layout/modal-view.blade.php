@@ -230,7 +230,8 @@
                 modal.find("#cmt-avatar-owner").attr("src","{{URL::to('api/photo')}}"+"/"+avl);
                 modal.find("#left-arrow").attr("data-id",$(".box-img-actived").data('idprev'));
                 modal.find("#right-arrow").attr("data-id",$(".box-img-actived").data('idnext'));
-                modal.find("#embed_map").attr('src', "https://maps.google.com/maps?q="+data.places.lat+","+data.places.lng+"&hl=es;z=14&amp&output=embed");
+                if(data.places!=null)
+                    modal.find("#embed_map").attr('src', "https://maps.google.com/maps?q="+data.places.lat+","+data.places.lng+"&hl=es;z=14&amp&output=embed");
                 //modal.find("#embed_map").attr('src', function () { return $(this).contents().get(0).location.href });
                 for (i = 0; i < data.boards.length; i++) {
                   modal.find("#cls-album").append("<div class='wf-box'><img data-id='"+data.boards[i]['post_id']+"' src='{{URL::to('api/photo')}}"+"/"+data.boards[i]['photo_link']+"' class='box-img'/></div>");
