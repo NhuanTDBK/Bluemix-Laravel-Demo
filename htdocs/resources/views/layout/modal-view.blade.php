@@ -67,14 +67,14 @@
           </div>
           <div class="col-xs-8 mv-cmt">
             <div class="mv-cmt-owner">
-              <img id="main-owner-avatarlink" src="img/5.jpg" class="logo-profile cmt-avatar">
+              <img id="main-owner-avatarlink" src="" class="logo-profile cmt-avatar">
               <div class="cmt-chat cmt-name">
                 <a id="main-owner-name">Tung</a>
               </div>
               <div class="cmt-chat" id="main-post-description"></div>
             </div>
             <div class="mv-cmt-itembox">
-              <img src="img/5.jpg" class="logo-profile cmt-avatar-owner" id="cmt-avatar-owner">
+              <img src="" class="logo-profile cmt-avatar-owner" id="cmt-avatar-owner">
               <div class="cmt-chat-owner">
                 <a>Tung</a>
                 <textarea id="main-comment-btn" class="cmt-boxchat" placeholder="Thêm bình luận"></textarea>
@@ -225,13 +225,19 @@
                 modal.find("#cls-board").text(data.board_title);
                 modal.find("#cls-name").text(data.owner);
                 modal.find("#cls-title").attr("src","{{URL::to('api/photo')}}"+"/"+data.photo_link);
-                modal.find("#main-post-description").text(data.description);
+                ht = '';
+                if (data.hashtag != null) {
+                  for (var i = 0; i < data.hashtag.split(",").length; i++) {
+                    ht = ht + "  <a>" + data.hashtag.split(",")[i]+ "</a>";
+                  };
+                }  
+                modal.find("#main-post-description").html(data.description + ht);
                 avl = "{{Auth::user()->avatar_link}}";
                 modal.find("#cmt-avatar-owner").attr("src","{{URL::to('api/photo')}}"+"/"+avl);
                 modal.find("#left-arrow").attr("data-id",$(".box-img-actived").data('idprev'));
                 modal.find("#right-arrow").attr("data-id",$(".box-img-actived").data('idnext'));
                 if(data.places!=null)
-                    modal.find("#embed_map").attr('src', "https://maps.google.com/maps?q="+data.places.lat+","+data.places.lng+"&hl=es;z=14&amp&output=embed");
+                 modal.find("#embed_map").attr('src', "https://maps.google.com/maps?q="+data.places.lat+","+data.places.lng+"&hl=es;z=14&amp&output=embed");
                 //modal.find("#embed_map").attr('src', function () { return $(this).contents().get(0).location.href });
                 for (i = 0; i < data.boards.length; i++) {
                   modal.find("#cls-album").append("<div class='wf-box'><img data-id='"+data.boards[i]['post_id']+"' src='{{URL::to('api/photo')}}"+"/"+data.boards[i]['photo_link']+"' class='box-img'/></div>");

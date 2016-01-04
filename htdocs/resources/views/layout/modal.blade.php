@@ -103,6 +103,14 @@
     });
     $('#board-list').on("click","button.pinit_btn",function(){
         console.log($(this).parent());
+        hashtag = $(".jqueryHashtags .hashtag").map(function(){
+          return $(this).text();
+        }).get();
+        ht = '';
+        for (var i = 0; i < hashtag.length; i++) {
+          ht = ht + "," + hashtag[i];
+        };
+        ht = ht.substring(1, ht.length);
         var url ="{{URL::to('api/post')}}";
         var data ={
           'description':$('#board_description').val(),
@@ -111,7 +119,8 @@
           'latitude' : latitude,
           'longitude' : longitude,
           'address' : address,
-          'name_address' : name_address
+          'name_address' : name_address,
+          'hashtag' : ht
         };
         $.post(url,data,function(data){
           console.log(data);

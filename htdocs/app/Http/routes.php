@@ -76,4 +76,4 @@ Route::get('search/insert','SearchController@insert');
 Route::post('create_noti','NotificationController@create');
 Route::post('create-box-chat','MessageController@create');
 Route::post('create-chat','MessageController@createchat');
-Route::get('create-recommend','RecommendController@setPost');
+Route::post('get-post','FrontEndController@getPost');

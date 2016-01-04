@@ -1315,7 +1315,7 @@ input::-webkit-input-placeholder {
     padding: 10px;
     width: 100%;
     padding-right: 40px;
-    overflow:hidden;
+    overflow: hidden;
     outline: none;
 }
 .col-xs-3 .box-img-card{
@@ -1356,7 +1356,7 @@ input::-webkit-input-placeholder {
     .cmt-name{margin-right: 5px;}
     .cmt-chat{padding-top: 10px;margin-left: 39px;}
     .cmt-chat-owner{width: 75%;padding-top: 20px;}
-    .mv-related-post .wf-box{width: 22%;}
+    .mv-related-post .wf-box{width: 30%;}
     .modal-upload .modal-dialog{width: 90%;margin-top: 40px;}
     .left-upload-modal{height: 465px;}
     .image-fit{margin-top: 20px;}
@@ -1366,7 +1366,11 @@ input::-webkit-input-placeholder {
     .modal-profile .modal-dialog{width: 300px;margin-top: 45px;}
     .modal-profile .modal-body{padding-bottom: 0px !important;}
     .form-horizontal .control-label{text-align: left !important;}
-    .user-profile-list{margin-left: 35px; margin-top: 10px;}
+
+    .user-profile-list {
+        margin-left: 35px;
+        margin-top: 10px;
+    }
     .user-profile-list li{width: 120px;}
     .right-side{height: 210px;}
     #tab2 .wf-box{width: 95%;}
@@ -1375,7 +1379,10 @@ input::-webkit-input-placeholder {
     .ml-fblogin{width: 80%;top: 100px;left: 10%;}
     .ml-line-text{left: 38%;}
     .ml-formlogin{width: 80%;left: 10%;}
-    .grid-board-fl li{width: 123px;}
+
+    .grid-board-fl li {
+        width: 123px;
+    }
 }
 @media screen and (min-width: 768px) {
     .navbar-fixed-top{width: 100% !important;}
@@ -1419,7 +1426,10 @@ input::-webkit-input-placeholder {
     .user-profile-list{margin-left: 350px;}
     #tab2 .wf-box{width: 23%;}
     .modal-login .modal-dialog{width: 50%;top: 120px;left: 25%;position: absolute;}
-    .grid-board-fl li{width: 130px;}
+
+    .grid-board-fl li {
+        width: 130px;
+    }
 }
 .object-fit_contain {
     object-fill:contain;

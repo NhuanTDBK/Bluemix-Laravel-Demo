@@ -60,15 +60,12 @@ class PostController extends Controller
         $board_id = $request->input('board_id');
         $user_id = Auth::user()->user_id;
         $photo_link = $request->input('photo_link');
-		if(isset($request->input('hashtag')))
-			$hash_tag = $request->input('hashtag');
-		else $hash_tag=null;
         if ($request->input('name_address') != null) {
             $place_lat = $request->input('latitude');
             $place_lng = $request->input('longitude');
             $place_name = $request->input('name_address');
             $place_address = $request->input('address');
-            
+            $hash_tag = $request->input('hashtag');
             $place = Place::createPlace($place_name, $place_address, $place_lat, $place_lng);
             $post = Post::CreatePost($board_id, $description, $photo_link, $user_id, $place, $hash_tag);
         }else{
