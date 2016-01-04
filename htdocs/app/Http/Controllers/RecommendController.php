@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Models\Post;
-use App\Models\UserPosts;
 use App\Models\PostRecommend;
+use App\Models\PostRecommendView;
 use Config;
 use Es;
 use Illuminate\Http\Request;
@@ -111,7 +110,11 @@ class RecommendController extends Controller
 //            $query  = ["description"=>$token["token"]];
 //            $results[] = $search->search($post_type,$query);
 
-        $results = PostRecommend::getPosts($post_id);
+        $results = PostRecommendView::getPosts($post_id);
+        return $results;
+    }
+    public function setPost(){
+        $results = PostRecommend::setRecommend();
         return $results;
     }
 }
