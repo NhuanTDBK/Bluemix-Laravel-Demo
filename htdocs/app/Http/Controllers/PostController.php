@@ -60,19 +60,29 @@ class PostController extends Controller
         $board_id = $request->input('board_id');
         $user_id = Auth::user()->user_id;
         $photo_link = $request->input('photo_link');
-	$hash_tag = $request->input('hashtag');
-    
+		$hash_tag = $request->input('hashtag');
+        $post_id = null;
         if ($request->input('name_address') != null) {
             $place_lat = $request->input('latitude');
             $place_lng = $request->input('longitude');
             $place_name = $request->input('name_address');
             $place_address = $request->input('address');
-            
             $place = Place::createPlace($place_name, $place_address, $place_lat, $place_lng);
             $post = Post::CreatePost($board_id, $description, $photo_link, $user_id, $place, $hash_tag);
+            $post_id = $post->getKey();
         }else{
             $post = Post::CreatePost($board_id, $description, $photo_link, $user_id, null, $hash_tag);
+            $post_id = $post->getKey();
         }
+        $pusher = App::make('pusher');
+        $list_following = FollowEvent::getFriend($user_id);
+        foreach($list_following as $user){
+            $pusher->trigger(strval($user["user_id"]), 'pin',
+                    array('name' => $user["name"],
+                        'post_id' => $post_id,
+                        'avatar_link' => $user["avatar_link"]));
+        }
+//        $new_post = UserPosts::getPostById($post_id);
         return response()->json(true);
     }	
 

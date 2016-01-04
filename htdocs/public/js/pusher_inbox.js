@@ -41,8 +41,12 @@ channel.bind('notification', function(data) {
 });
 console.log("Like channel initializing");
 channel.bind('like', function(data) {
-
-    $("#box_noti").append("<div class='fr_item noti_item' data-noti='"+data.post_id+"'><img src='http://foodieweb.com/api/photo/"+data.avatar_link+"' height='30' width='30' class='logo-profile' style='cursor:pointer;float:left;width:30px !important;'><p style='padding-top: 5px;margin-left: 39px;'>"+data.name+" vừa like ảnh của bạn</p></div>");
+    $("#box_noti").append("<div class='fr_item noti_item' data-noti='"+data.post_id+"'><img src='http://foodieweb.com/api/photo/"+data.avatar_link+"' height='30' width='30' class='logo-profile' style='cursor:pointer;float:left;width:30px !important;'><p style='padding-top: 5px;margin-left: 39px;'>"+data.name+" like your post</p></div>");
+    $(".noti_alert").show();
+});
+console.log("Pin channel init")
+channel.bind('pin', function(data) {
+    $("#box_noti").append("<div class='fr_item noti_item' data-noti='"+data.post_id+"'><img src='http://foodieweb.com/api/photo/"+data.avatar_link+"' height='30' width='30' class='logo-profile' style='cursor:pointer;float:left;width:30px !important;'><p style='padding-top: 5px;margin-left: 39px;'>"+data.name+" has pinned new post</p></div>");
     $(".noti_alert").show();
 });
 channel.bind('onShowChatBox',function(data){
