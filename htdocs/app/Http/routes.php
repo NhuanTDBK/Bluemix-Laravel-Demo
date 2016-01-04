@@ -43,7 +43,7 @@ Route::group(['prefix'=>'api'],function()
 	Route::get('user/{user_id}/timeline','UserController@getPostsByFollowingUserId');
     Route::get('post/{post_id}/like','LikeController@likePost');
     Route::post('post/{post_id}/comment',['uses'=>'CommentController@commentPost','middleware'=>'auth']);
-    Route::get('post/{post_id}/recommend','RecommendController@getPost');
+    Route::get('post/recommend/{post_id}','RecommendController@getPost');
     Route::get('/messages','MessageController@getInbox');
     Route::post('/messages','MessageController@store');
     Route::get('genxml','FrontEndController@genXml');

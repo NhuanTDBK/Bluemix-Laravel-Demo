@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Models\Post;
 use App\Models\UserPosts;
+use App\Models\PostRecommend;
 use Config;
 use Es;
 use Illuminate\Http\Request;
@@ -109,9 +110,8 @@ class RecommendController extends Controller
 //        foreach($tokens as $token){
 //            $query  = ["description"=>$token["token"]];
 //            $results[] = $search->search($post_type,$query);
-//        }
-        $owner = Post::getPostById($post_id)["user_id"];
-        $results = UserPosts::where('post_id', '!=', '$post_id')->where('user_id', '!=', $owner)->take(10)->get();
+
+        $results = PostRecommend::getPosts($post_id);
         return $results;
     }
 }

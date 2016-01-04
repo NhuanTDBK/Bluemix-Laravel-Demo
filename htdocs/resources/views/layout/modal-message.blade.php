@@ -19,7 +19,6 @@
 
 <script type="text/javascript">
   $('.box-mess').hide();
-
   $('.bm-close').on('click', function(){
     $('.box-mess').hide();
   });

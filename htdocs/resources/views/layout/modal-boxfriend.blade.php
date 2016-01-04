@@ -1,5 +1,5 @@
 @section('modal')
-<div class="dropup" style="position: fixed;right: 0px;bottom: 0px;" data-toggle="tooltip" title="Danh sách bạn bè">
+<div id='box-friend-dlg' class="dropup" style="position: fixed;right: 0px;bottom: 0px;" data-toggle="tooltip" title="Danh sách bạn bè">
   <button class="btn btn-default dropdown-toggle glyphicon glyphicon-comment" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:75px;">
   </button>
   <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenu2" id="chat_list">
@@ -15,7 +15,7 @@
     <li role="separator" class="divider" style="margin: 0px !important;"></li>
     <li>
       <div class="form-group" style="margin-bottom:0px !important;">
-        <input  id="search_fr" type="text" class="form-control" placeholder="Search">
+        <input id="search_fr" type="text" class="form-control" placeholder="Search">
       </div>
     </li>
   </ul>

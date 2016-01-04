@@ -83,8 +83,8 @@
           </div>
           <div class="col-xs-12 mv-related-post">
           <p>Related Posts</p>
-          <div id="recommend_lists">
-             <div class="wf-box" data-id="">
+          <div id="recommend_lists" class="wf-container">
+             <div class="wf-box" style="display:none" data-id="">
              {{--Link ảnh--}}
                  <img src="" class="box-img" data-id="" data-idnext="" data-idprev=""/>
                 <div class="content">
@@ -99,11 +99,11 @@
                              </p>
                              {{--Ten board--}}
                              <h4 class="card-title"></h4>
+                         </div>
+                    </div>
                 </div>
-              </div>
-                </div>
-              </div>
-                </div>
+             </div>
+          </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
@@ -253,6 +253,31 @@
                 modal.modal('show');
             }
         });
+        var urlRecommend = "{{URL::to('/api/post/recommend')}}"+'/'+id;
+        var boxHTML = $("#recommend_lists .wf-box:first").clone();
+//        $("#recommend_lists").remove(".wf-box::visible");
+        $.ajax(
+            {
+                type:"GET",
+                url:urlRecommend,
+                success:function(data){
+                    if(data.length==0)
+                        return;
+                    $("#recommend_lists").empty();
+                    $.each(data,function(index,post){
+                        var postBox = boxHTML.clone();
+                        postBox.data("id",post.post_id);
+                        postBox.find("h3.box-img-des").text(post.description);
+                        postBox.find("img.box-img").attr("src","{{URL::to('api/photo')}}"+"/"+post.photo_link);
+                        postBox.find("div.box-img-card .card-owner").text(post.owner);
+                        postBox.find("div.box-img-card .card-title").text(post.board_title);
+                        postBox.fadeIn();
+                        console.log(postBox.find("img.box-img").attr("src"));
+                        $("#recommend_lists").append(postBox);
+                    });
+                }
+            }
+        );
     }
     $("#post_pin_btn").click(function(){
         $('.modal-upload').css("position","fixed").css("z-index",1050);

@@ -1,4 +1,7 @@
 @extends('layout.index')
+<script src="{{URL::asset('js/jquery-2.1.4.min.js')}}"></script>
+@include('layout.modal-message')
+@include('layout.modal-boxfriend')
 <link href="{{URL::asset('img/logo.png')}}" rel="icon" type="image/png" sizes="96x96" >
 @section('grid-layout')
 <script type="text/javascript">
